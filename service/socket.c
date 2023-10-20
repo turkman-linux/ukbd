@@ -2,9 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/socket.h>
+#include <unistd.h>
 #include <sys/un.h>
+#include "keyboard.h"
 
-#define SERVER_SOCK_FILE "/dev/input/amogus"
 int soc_fd;
 struct sockaddr_un from;
 struct sockaddr_un addr;
