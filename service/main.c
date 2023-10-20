@@ -2,7 +2,7 @@
 #include <linux/uinput.h>
 #include <linux/types.h>
 #include "keyboard.h"
-int main(){
+int _start(){
     socket_init();
     uinput_init();
     permission_init();

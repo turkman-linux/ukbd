@@ -4,9 +4,10 @@ service_files = $(patsubst %.c, %.o, $(wildcard service/*.c))
 	gcc -c $< -o $@ 
 
 main: $(service_files)
-	gcc $(wildcard service/*.o) -o main
+	gcc $(wildcard service/*.o) $(CFLAGS) -nostdlib -lc -o main
+	strip main
 
 build: main
 
 clean:
-	rm -f main service/*.o
+	rm -vf main service/*.o
