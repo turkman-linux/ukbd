@@ -23,15 +23,21 @@ void emit(int fd, int type, int code, int val) {
 
 int fd;
 
-void send_key(int code) {
-    printf("%d\n", code);
+void press_key(int code) {
     ioctl(fd, UI_SET_KEYBIT, code);
     emit(fd, EV_KEY, code, 1);
     emit(fd, EV_SYN, SYN_REPORT, 0);
+}
+
+void release_key(int code) {
+    ioctl(fd, UI_SET_KEYBIT, code);
     emit(fd, EV_KEY, code, 0);
     emit(fd, EV_SYN, SYN_REPORT, 0);
 }
-
+void send_key(int code) {
+    press_key(code);
+    release_key(code);
+}
 int uinput_init(void) {
     struct uinput_setup usetup;
 

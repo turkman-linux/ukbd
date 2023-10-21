@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <linux/uinput.h>
 #include <linux/types.h>
-#include "keyboard.h"
+#include <keyboard.h>
 
 int _start() {
     socket_init();
@@ -9,9 +9,14 @@ int _start() {
     permission_init();
     while (1) {
         char * data = socket_read();
-        printf("DEBUG: %s\n", data);
-        for (int i = 0; data[i]; i++) {
-            send_key((__u16) data[i]);
+        int status = data[0];
+        int key = data[1];
+        if (status == 1){
+            send_key(key);
+        }else if (status == 2){
+            press_key(key);
+        }else if (status == 3){
+            release_key(key);
         }
     }
 }
