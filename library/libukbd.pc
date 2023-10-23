@@ -1,0 +1,7 @@
+prefix=/usr
+includedir=${prefix}/include
+
+Name: libukbd
+Description: Uinput based keyboard library
+Version: 1.0
+Libs: -lukbd

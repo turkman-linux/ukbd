@@ -3,11 +3,11 @@ int soc_client_fd;
 struct sockaddr_un client_from;
 struct sockaddr_un client_addr;
 
-int client_init() {
+void client_init() {
     soc_client_fd = socket(PF_UNIX, SOCK_DGRAM, 0);
     memset(&client_addr, 0, sizeof(client_addr));
     client_addr.sun_family = AF_UNIX;
-    strncpy(client_addr.sun_path, SERVER_SOCK_FILE, sizeof(client_addr));
+    strcpy(client_addr.sun_path, SERVER_SOCK_FILE);
 
     bind(soc_client_fd, (struct sockaddr *) &client_addr, sizeof(client_addr));
     connect(soc_client_fd, (struct sockaddr *) &client_addr, sizeof(client_addr));

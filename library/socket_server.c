@@ -3,7 +3,7 @@ int soc_server_fd;
 struct sockaddr_un server_from;
 struct sockaddr_un server_addr;
 socklen_t fromlen;
-int socket_init() {
+void socket_init() {
     int ret;
     int ok = 1;
     int len;

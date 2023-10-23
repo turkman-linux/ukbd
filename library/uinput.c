@@ -38,7 +38,7 @@ void send_key(int code) {
     press_key(code);
     release_key(code);
 }
-int uinput_init(void) {
+void uinput_init(void) {
     struct uinput_setup usetup;
 
     fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
