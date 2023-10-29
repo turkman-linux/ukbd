@@ -1,0 +1,1 @@
+GtkWidget* init_window();

@@ -1,14 +1,17 @@
 library_files = $(patsubst %.c, %.o, $(wildcard library/*.c))
 service_files = $(patsubst %.c, %.o, $(wildcard service/*.c))
+gtk_files = $(patsubst %.c, %.o, $(wildcard gtk/*.c))
+
+GTK_FLAGS = `pkg-config --cflags gtk+-3.0`
 
 all: clean _build
 
 %.o: %.c 
-	$(CC) -c $< -o $@ -Ilibrary -fPIC
+	$(CC) -c $< -o $@ -Ilibrary -fPIC $(GTK_FLAGS) -Igtk
 
 main: $(service_files)
 	mkdir -p build
-	$(CC) $(service_files) -o main \
+	$(CC) $(service_files) \
 	    -Ilibrary -nostdlib -lukbd  -Lbuild -lc -o build/main
 	strip build/main
 
@@ -18,8 +21,16 @@ libukbd: $(library_files)
 	    -shared -fPIC -Ilibrary -nostdlib -lc
 	strip build/libukbd.so
 
+gui-gtk: libukbd $(gtk_files)
+	mkdir -p build
+	$(CC) $(gtk_files) $(shell pkg-config --libs gtk+-3.0) \
+	    -Ilibrary -lukbd  -Lbuild -o build/gui-gtk
+
 run: build
 	LD_LIBRARY_PATH=$$PWD/build build/main
+
+run-gtk: gui-gtk
+	LD_LIBRARY_PATH=$$PWD/build build/gui-gtk
 
 test:
 	valac data/test.vala -o build/test-vala --vapidir=./library/ --pkg libukbd -X -I./library -X -L./build -X -lukbd
@@ -43,4 +54,4 @@ test-x86:
 _build: libukbd main
 
 clean:
-	rm -vfr $(service_files) $(library_files) build */__pycache__
+	rm -vfr $(service_files) $(gtk_files) $(library_files) build */__pycache__
