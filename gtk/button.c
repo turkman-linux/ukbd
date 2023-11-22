@@ -1,22 +1,13 @@
 #include <gtk/gtk.h>
-typedef struct _b_dat {
-    int num;
-} button_data;
-
-
-
-void button_event(GtkButton* w, gpointer f){
-    button_data* dat = f;
-    g_print("%d\n", dat->num);
-    dat->num++;
+static void button_clicked(GtkWidget *button, gpointer data) {
+    int number = (int)data;
+    printf("%d\n",number);
 }
+
 
 GtkButton* create_button(int number, char* label){
     GtkButton* ret = gtk_button_new_with_label(label);
-    button_data dat;
-    g_print("%p\n", dat.num);
-    g_signal_connect(ret, "clicked", G_CALLBACK(button_event), &dat);
-    dat.num = number;
+    g_signal_connect(ret, "clicked", G_CALLBACK(button_clicked), (gpointer)number);
     gtk_widget_show(ret);
     return ret;
 }
