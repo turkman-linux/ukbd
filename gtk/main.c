@@ -1,14 +1,13 @@
 #include <gtk/gtk.h>
 #include  <gui.h>
+// X11 code + 8 = uinput code
 #define BUTTON(A) create_button(A, get_label_from_keycode(A+8, 0))
-
+// https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
 void main(int argc, char** argv){
     // init gtk
     gtk_init(&argc, &argv);
     GtkWidget *window = init_window();
     // get button label using libX11
-    int code = 30; // X11 code + 8 = uinput code
-    char* label = get_label_from_keycode(code+8,0);
     GtkWidget *grid = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(window), grid);
     int row = 0, col = 0;
