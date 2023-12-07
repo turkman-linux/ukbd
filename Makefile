@@ -24,6 +24,7 @@ libukbd: $(library_files)
 gui-gtk: libukbd $(gtk_files)
 	mkdir -p build
 	$(CC) $(gtk_files) $(shell pkg-config --libs gtk+-3.0) \
+	    -lX11 -lX11-xcb -lXext -lXtst \
 	    -Ilibrary -lukbd  -Lbuild -o build/gui-gtk
 
 run: build
