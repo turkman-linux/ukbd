@@ -2,11 +2,11 @@ library_files = $(patsubst %.c, %.o, $(wildcard library/*.c))
 service_files = $(patsubst %.c, %.o, $(wildcard service/*.c))
 gtk_files = $(patsubst %.c, %.o, $(wildcard gtk/*.c))
 
-GTK_FLAGS = `pkg-config --cflags gtk+-3.0`
+GTK_FLAGS = `pkg-config --cflags gtk+-3.0` -g3
 
 all: clean _build
 
-%.o: %.c 
+%.o: %.c
 	$(CC) -c $< -o $@ -Ilibrary -fPIC $(GTK_FLAGS) -Igtk
 
 main: $(service_files)
