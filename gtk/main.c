@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 #include <gui.h>
-
+#include <linux/uinput.h>
 // X11 code + 8 = uinput code
 #define BUTTON(A) create_button(A, get_label_from_keycode(A + 8, 0))
 
@@ -13,27 +13,31 @@ void main(int argc, char **argv)
 
     keyboardview_init(window);
 
-    // number row
-    add_button(41, 0, 0, 100 / 13.0);
-    for (int i = 2; i <= 13; i++) {
-        add_button(i, i-1, 0, 100 / 13.0);
-    }
-    
-    // first row
-    for (int i = 16; i <= 27; i++) {
-        add_button(i, i-15, 1, 100 / 12.0);
-    }
+    /*
+    void add_buttons(
+        int row,
+        int offset,
+        int min,
+        int max,
+        float percent);
+    void add_button(
+        int keycode,
+        int row,
+        int col,
+        float percent);
+    */
 
+    // number row
+    add_button(KEY_GRAVE, 0, 0, 100 / 13.0);
+    add_buttons(0, 1, KEY_1, KEY_EQUAL, 100 / 13.0);
+    // first row
+    add_buttons(1, 0, KEY_Q, KEY_RIGHTBRACE, 100 / 12.0);
     // second row
-    for (int i = 30; i <= 40; i++) {
-       add_button(i, i-29, 2, 100 / 12.0);
-    }
-    add_button(43, 14, 2, 100 / 12.0);
+    add_buttons(2, 0, KEY_A, KEY_APOSTROPHE, 100 / 12.0);
+    add_button(KEY_BACKSLASH, 14, 2, 100 / 12.0);
 
     // third row
-    for (int i = 44; i <= 53; i++) {
-       add_button(i, i-43, 3, 100 / 10.0);
-    }
+    add_buttons(3, 0, KEY_Z, KEY_SLASH, 100 / 10.0);
 
     gtk_widget_show_all(window);
 

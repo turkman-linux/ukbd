@@ -11,10 +11,14 @@ typedef struct _object {
 } Button;
 
 GtkWidget *fixed;
-Button buttons[1024];
-int _cur = 0;
+static Button buttons[1024];
+static int _cur = 0;
 
-float find_item_percent(int col, int row){
+static int num_of_row = 0;
+static int num_of_col = 0;
+
+
+static float find_item_percent(int col, int row){
     float m=0;
     for(int i=0;i<_cur;i++){
         if(buttons[i].col == col){
@@ -26,7 +30,7 @@ float find_item_percent(int col, int row){
     return m;
 }
 
-int find_num_of_row(){
+static int find_num_of_row(){
     int m=1;
     for(int i=0;i<_cur;i++){
         if(buttons[i].row+1 > m){
@@ -36,7 +40,7 @@ int find_num_of_row(){
     return m;
 }
 
-int find_num_of_col(){
+static int find_num_of_col(){
     int m=1;
     for(int i=0;i<_cur;i++){
         if(buttons[i].col+1 > m){
@@ -50,8 +54,6 @@ static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpoin
     // Get the width of the window
     int window_width = allocation->width;
     int window_height = allocation->height;
-    int num_of_row = find_num_of_row();
-    int num_of_col = find_num_of_col();
 
     for(int i=0;i<_cur;i++){
         int button_width = (int)((buttons[i].percent * window_width) / 100);
@@ -76,6 +78,8 @@ void keyboardview_init(GtkWidget *window){
 }
 
 void add_button(int keycode, int row, int col, float percent){
+    num_of_row = find_num_of_row();
+    num_of_col = find_num_of_col();
     Button b;
     b.widget = create_button(keycode, get_label_from_keycode(keycode + 8, 0));
     b.percent = percent;
@@ -84,4 +88,10 @@ void add_button(int keycode, int row, int col, float percent){
     buttons[_cur] = b;
     _cur++;
     gtk_fixed_put(GTK_FIXED(fixed), b.widget, 0, 0);
+}
+
+void add_buttons(int row, int offset, int min, int max, float percent){
+    for (int i = min; i <= max; i++) {
+        add_button(i, i-(min - offset), row, percent);
+    }
 }
