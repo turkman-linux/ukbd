@@ -28,6 +28,8 @@ char* get_label_from_keycode(int code, int group){
 static char* str_to_label(char* str){
     if(iseq(str,"grave")){
         return "`";
+    }else if(iseq(str,"plus")){
+        return "+";
     }else if(iseq(str,"minus")){
         return "-";
     }else if(iseq(str,"equal")){
