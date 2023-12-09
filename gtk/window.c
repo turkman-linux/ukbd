@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 extern GtkWidget *window;
+extern GtkWidget *scrolled_window;
 
 GtkWidget* init_window(){
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -18,9 +19,6 @@ GtkWidget* init_window(){
 }
 
 void reload_window(){
-    gint x, y;
-    gtk_window_get_position(GTK_WINDOW(window), &x, &y);
-    gtk_widget_hide(window);
-    gtk_widget_show(window);
-    gtk_window_move(window, x, y);
+    gtk_widget_hide(scrolled_window);
+    gtk_widget_show(scrolled_window);
 }

@@ -7,6 +7,7 @@
 #define mask_altgr masks[KEY_RIGHTALT]
 
 GtkWidget *fixed;
+GtkWidget *scrolled_window;
 Button buttons[1024];
 static int _cur = 0;
 
@@ -71,7 +72,7 @@ void reallocate_buttons(int window_width, int window_height){
 
 void keyboardview_init(GtkWidget *window){
     fixed = gtk_fixed_new();
-    GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     gtk_container_add(GTK_CONTAINER(window), scrolled_window);
     gtk_container_add(GTK_CONTAINER(scrolled_window), fixed);
     g_signal_connect(window, "size-allocate", G_CALLBACK(on_window_resized), NULL);
