@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
+#include <stdbool.h>
 #include <gui.h>
-
 
 typedef struct _object {
     GtkWidget *widget;
@@ -8,6 +8,7 @@ typedef struct _object {
     int col;
     int row;
     float percent;
+    bool update;
 } Button;
 
 GtkWidget *fixed;
@@ -50,11 +51,15 @@ static int find_num_of_col(){
     return m;
 }
 
+
 static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpointer user_data) {
     // Get the width of the window
     int window_width = allocation->width;
     int window_height = allocation->height;
+    reallocate_buttons(window_width, window_height);
+}
 
+void reallocate_buttons(int window_width, int window_height){
     for(int i=0;i<_cur;i++){
         int button_width = (int)((buttons[i].percent * window_width) / 100);
         int button_height = (int) window_height / num_of_col;
@@ -65,8 +70,6 @@ static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpoin
         gtk_widget_set_size_request(buttons[i].widget, button_width, button_height);
         gtk_fixed_move(fixed, buttons[i].widget, new_x , new_y);
     }
-
-    // Set the size of the buttons
 }
 
 void keyboardview_init(GtkWidget *window){
@@ -78,13 +81,19 @@ void keyboardview_init(GtkWidget *window){
 }
 
 void add_button(int keycode, int row, int col, float percent){
+    add_button_with_label(keycode, row, col, percent, get_label_from_keycode(keycode + 8, 0));
+    buttons[_cur-1].update = TRUE;
+}
+
+void add_button_with_label(int keycode, int row, int col, float percent, char* label){
     num_of_row = find_num_of_row();
     num_of_col = find_num_of_col();
     Button b;
-    b.widget = create_button(keycode, get_label_from_keycode(keycode + 8, 0));
+    b.widget = create_button(keycode, label);
     b.percent = percent;
     b.col = col;
     b.row = row;
+    b.update = FALSE;
     buttons[_cur] = b;
     _cur++;
     gtk_fixed_put(GTK_FIXED(fixed), b.widget, 0, 0);
