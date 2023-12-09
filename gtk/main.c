@@ -55,7 +55,7 @@ void main(int argc, char **argv)
     add_button_with_label(KEY_PAGEUP, 16, 2, l(2), "PgUp");
 
     // second row
-    add_button_custom(0, 3, l(3), create_toggle_button(KEY_CAPSLOCK, "Caps"));
+    add_button_with_label(KEY_CAPSLOCK, 0, 3, l(3), "Caps");
     add_buttons(3, 1, KEY_A, KEY_APOSTROPHE, l(2));
     add_button_with_label(KEY_ENTER, 14, 3, l(3.5), "Enter");
     add_button_with_label(KEY_PAGEDOWN, 15, 3, l(2), "PgDn");
