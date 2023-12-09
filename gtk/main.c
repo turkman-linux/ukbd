@@ -53,8 +53,17 @@ void main(int argc, char **argv)
     // third row
     add_buttons(4, 0, KEY_Z, KEY_SLASH, 100 / 10.0);
 
+    // bottom row
+    add_button_custom(0, 5, 100 / 10.0, create_toggle_button(KEY_LEFTCTRL, "Ctrl"));
+    add_button_with_label(KEY_LEFTMETA, 1, 5, 100 / 10.0, "Lnx");
+    add_button_custom(2, 5, 100 / 10.0, create_toggle_button(KEY_LEFTALT, "Alt"));
+    add_button_with_label(KEY_SPACE, 3, 5, 100 / 2.0, "____");
+    add_button_custom(4, 5, 100 / 10.0, create_toggle_button(KEY_RIGHTALT, "Alt"));
+    add_button_custom(5, 5, 100 / 10.0, create_toggle_button(KEY_RIGHTCTRL, "Ctrl"));
+
     // trigger resize event
     reallocate_buttons(600, 200);
+    
 
     gtk_widget_show_all(window);
     

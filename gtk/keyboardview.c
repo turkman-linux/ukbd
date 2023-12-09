@@ -85,18 +85,21 @@ void add_button(int keycode, int row, int col, float percent){
     buttons[_cur-1].update = TRUE;
 }
 
-void add_button_with_label(int keycode, int row, int col, float percent, char* label){
-    num_of_row = find_num_of_row();
-    num_of_col = find_num_of_col();
+void add_button_custom(int row, int col, float percent, GtkWidget* widget){
     Button b;
-    b.widget = create_button(keycode, label);
+    b.widget = widget;
     b.percent = percent;
     b.col = col;
     b.row = row;
     b.update = FALSE;
     buttons[_cur] = b;
     _cur++;
+    num_of_row = find_num_of_row();
+    num_of_col = find_num_of_col();
     gtk_fixed_put(GTK_FIXED(fixed), b.widget, 0, 0);
+}
+void add_button_with_label(int keycode, int row, int col, float percent, char* label){
+    add_button_custom(row, col, percent, create_button(keycode, label));
 }
 
 void add_buttons(int row, int offset, int min, int max, float percent){
