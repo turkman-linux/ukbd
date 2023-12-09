@@ -3,6 +3,8 @@
 #include <linux/uinput.h>
 // X11 code + 8 = uinput code
 #define BUTTON(A) create_button(A, get_label_from_keycode(A + 8, 0))
+// keyboard dimensin to percent
+#define l(A) A*100/30.5
 
 // https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
 void main(int argc, char **argv)
@@ -28,41 +30,56 @@ void main(int argc, char **argv)
     */
 
     // F row
-    add_button_with_label(KEY_ESC, 0, 0, 100 / 10, "Esc");
-    for (int i=1;i<=12;i++){
+    add_button_with_label(KEY_ESC, 0, 0, l(2.25), "Esc");
+    for (int i=1;i<=10;i++){
         char str[4] = "F";
         sprintf(str, "F%d", i);
-        add_button_with_label(i+59, i, 0, 80 / 12.0, str);
+        add_button_with_label(i+59, i, 0, l(2), str);
     }
-    add_button_with_label(KEY_DELETE, 13, 0, 100 / 10, "Del");
+    add_button_with_label(KEY_F11, 11, 0, l(2), "F11");
+    add_button_with_label(KEY_F12, 12, 0, l(2), "F12");
+    add_button_with_label(KEY_SYSRQ, 13, 0, l(2), "Ptsc");
+    add_button_with_label(KEY_DELETE, 14, 0, l(2.25), "Del");
 
     // number row
-    add_button(KEY_GRAVE, 0, 1, 90 / 13.0);
-    add_buttons(1, 1, KEY_1, KEY_EQUAL, 90 / 13.0);
-    add_button_with_label(KEY_BACKSPACE, 13, 1, 100 / 10.0, "<--");
+    add_button(KEY_GRAVE, 0, 1, l(2));
+    add_buttons(1, 1, KEY_1, KEY_EQUAL, l(2));
+    add_button_with_label(KEY_BACKSPACE, 13, 1, l(2.5), "<--");
+    add_button_with_label(KEY_HOME, 14, 1, l(2), "Home");
 
 
     // first row
-    add_buttons(2, 0, KEY_Q, KEY_RIGHTBRACE, 100 / 13.0);
-    add_button(KEY_BACKSLASH, 14, 2, 100 / 13.0);
+    add_button_with_label(KEY_TAB, 0, 2, l(2.25), "Tab");
+    add_buttons(2, 1, KEY_Q, KEY_RIGHTBRACE, l(2));
+    add_button(KEY_BACKSLASH, 15, 2, l(2.25));
+    add_button_with_label(KEY_PAGEUP, 16, 2, l(2), "PgUp");
 
     // second row
-    add_buttons(3, 0, KEY_A, KEY_APOSTROPHE, 90 / 11.0);
-    add_button_with_label(KEY_ENTER, 13, 3, 100 / 10.0, "Enter");
+    add_button_custom(0, 3, l(3), create_toggle_button(KEY_CAPSLOCK, "Caps"));
+    add_buttons(3, 1, KEY_A, KEY_APOSTROPHE, l(2));
+    add_button_with_label(KEY_ENTER, 14, 3, l(3.5), "Enter");
+    add_button_with_label(KEY_PAGEDOWN, 15, 3, l(2), "PgDn");
 
     // third row
-    add_buttons(4, 0, KEY_Z, KEY_SLASH, 100 / 10.0);
+    add_button_custom(0, 4, l(3.6), create_toggle_button(KEY_LEFTSHIFT, "Shift"));
+    add_buttons(4, 1, KEY_Z, KEY_SLASH, l(2));
+    add_button_custom(12, 4, l(2.3), create_toggle_button(KEY_LEFTSHIFT, "Shift"));
+    add_button_with_label(KEY_UP, 13, 4, l(2.3), "Up");
+    add_button_with_label(KEY_END, 14, 4, l(2.3), "End");
 
     // bottom row
-    add_button_custom(0, 5, 100 / 10.0, create_toggle_button(KEY_LEFTCTRL, "Ctrl"));
-    add_button_with_label(KEY_LEFTMETA, 1, 5, 100 / 10.0, "Lnx");
-    add_button_custom(2, 5, 100 / 10.0, create_toggle_button(KEY_LEFTALT, "Alt"));
-    add_button_with_label(KEY_SPACE, 3, 5, 100 / 2.0, "____");
-    add_button_custom(4, 5, 100 / 10.0, create_toggle_button(KEY_RIGHTALT, "Alt"));
-    add_button_custom(5, 5, 100 / 10.0, create_toggle_button(KEY_RIGHTCTRL, "Ctrl"));
+    add_button_custom(0, 5, l(2.3), create_toggle_button(KEY_LEFTCTRL, "Ctrl"));
+    add_button_with_label(KEY_LEFTMETA, 1, 5, l(2.3), "Lnx");
+    add_button_custom(2, 5, l(2.3), create_toggle_button(KEY_LEFTALT, "Alt"));
+    add_button_with_label(KEY_SPACE, 3, 5, l(12.4), "____");
+    add_button_custom(4, 5, l(2.3), create_toggle_button(KEY_RIGHTALT, "Alt"));
+    add_button_custom(5, 5, l(2), create_toggle_button(KEY_RIGHTCTRL, "Ctrl"));
+    add_button_with_label(KEY_LEFT, 6, 5, l(2.3), "LEFT");
+    add_button_with_label(KEY_DOWN, 7, 5, l(2.3), "DOWN");
+    add_button_with_label(KEY_RIGHT, 8, 5, l(2.3), "RIGHT");
 
     // trigger resize event
-    reallocate_buttons(600, 200);
+    reallocate_buttons(666, 222);
     
 
     gtk_widget_show_all(window);
