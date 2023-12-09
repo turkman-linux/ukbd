@@ -8,7 +8,7 @@
 static char* str_to_label(char* str);
 Display *display;
 
-char* get_label_from_keycode(int code, int group){
+char* get_label_from_keycode(int code, int level){
     if(display == NULL){
         display = XOpenDisplay(NULL);
         if (!display) {
@@ -16,7 +16,7 @@ char* get_label_from_keycode(int code, int group){
             exit(1);
         }
     }
-    KeySym keysym = XkbKeycodeToKeysym(display, code, group, 0);
+    KeySym keysym = XkbKeycodeToKeysym(display, code, 0, level);
     char* sym = XKeysymToString(keysym);
     if(sym){
         return str_to_label(sym);
@@ -68,6 +68,8 @@ static char* str_to_label(char* str){
         return "ç";
     }else if(iseq(str,"schwa")){
         return "ə";
+    }else if(iseq(str,"VoidSymbol")){
+        return "";
     }else{
         return str;
     }

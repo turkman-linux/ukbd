@@ -5,13 +5,14 @@
 #define BUTTON(A) create_button(A, get_label_from_keycode(A + 8, 0))
 // keyboard dimensin to percent
 #define l(A) A*100/30.5
+GtkWidget *window;
 
 // https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
 void main(int argc, char **argv)
 {
     // init gtk
     gtk_init(&argc, &argv);
-    GtkWidget *window = init_window();
+    window = init_window();
 
     keyboardview_init(window);
 

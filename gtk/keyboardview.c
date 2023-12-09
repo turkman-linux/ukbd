@@ -1,22 +1,19 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
+#include <linux/uinput.h>
 #include <gui.h>
 
-typedef struct _object {
-    GtkWidget *widget;
-    int keycode;
-    int col;
-    int row;
-    float percent;
-    bool update;
-} Button;
+#define mask_shift (masks[KEY_LEFTSHIFT] || masks[KEY_RIGHTSHIFT])
+#define mask_altgr masks[KEY_RIGHTALT]
 
 GtkWidget *fixed;
-static Button buttons[1024];
+Button buttons[1024];
 static int _cur = 0;
 
 static int num_of_row = 0;
 static int num_of_col = 0;
+
+extern int *masks;
 
 
 static float find_item_percent(int col, int row){
@@ -83,6 +80,34 @@ void keyboardview_init(GtkWidget *window){
 void add_button(int keycode, int row, int col, float percent){
     add_button_with_label(keycode, row, col, percent, get_label_from_keycode(keycode + 8, 0));
     buttons[_cur-1].update = TRUE;
+    buttons[_cur-1].keycode = keycode;
+}
+
+void update_buttons(){
+    char* label;
+    bool update_request = FALSE;
+    for(int i=0;i<_cur;i++){
+        if (buttons[i].update){
+            label = NULL;
+            if(mask_shift && mask_altgr){
+                label = get_label_from_keycode(buttons[i].keycode + 8, 3);
+            }else if(mask_altgr){
+                label = get_label_from_keycode(buttons[i].keycode + 8, 2);
+            }else if(mask_shift){
+                label = get_label_from_keycode(buttons[i].keycode + 8, 1);
+            }else{
+                label = get_label_from_keycode(buttons[i].keycode + 8, 0);
+            }
+            if(strcmp(buttons[i].label, label)!=0){
+                gtk_button_set_label(buttons[i].widget, label);
+                buttons[i].label = label;
+                update_request = TRUE;
+            }
+        }
+    }
+    if(update_request){
+        reload_window();
+    }
 }
 
 void add_button_custom(int row, int col, float percent, GtkWidget* widget){
@@ -100,6 +125,7 @@ void add_button_custom(int row, int col, float percent, GtkWidget* widget){
 }
 void add_button_with_label(int keycode, int row, int col, float percent, char* label){
     add_button_custom(row, col, percent, create_button(keycode, label));
+    buttons[_cur-1].label = label;
 }
 
 void add_buttons(int row, int offset, int min, int max, float percent){

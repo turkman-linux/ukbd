@@ -2,9 +2,11 @@
 #include <linux/uinput.h>
 #include <stdbool.h>
 #include <libukbd.h>
+#include <gui.h>
 
 
 int *masks;
+
 
 static void button_clicked(GtkWidget *button, gpointer data) {
     int number = (int)data;
@@ -23,6 +25,7 @@ static void button_clicked(GtkWidget *button, gpointer data) {
             masks[i] = 0;
         }
     }
+    update_buttons();
 }
 
 GtkButton* create_button(int number, char* label){
@@ -51,6 +54,7 @@ static void toggle_button_clicked(GtkWidget *button, gpointer data) {
             break;
     }
     printf("Toggle: %d\n",masks[number]);
+    update_buttons();
 }
 
 

@@ -1,4 +1,6 @@
 #include <gtk/gtk.h>
+extern GtkWidget *window;
+
 GtkWidget* init_window(){
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_widget_show_all(window);
@@ -13,4 +15,12 @@ GtkWidget* init_window(){
                                               GTK_STYLE_PROVIDER(cssProvider),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     return window;
+}
+
+void reload_window(){
+    gint x, y;
+    gtk_window_get_position(GTK_WINDOW(window), &x, &y);
+    gtk_widget_hide(window);
+    gtk_widget_show(window);
+    gtk_window_move(window, x, y);
 }
