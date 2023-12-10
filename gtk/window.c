@@ -20,7 +20,7 @@ GtkWidget* init_window(){
          background: #8e0000; \
       } \
       #key_lock { \
-          background: #008e00; \
+          background: #00008e; \
       } ";
     gtk_css_provider_load_from_data(cssProvider, cssData, -1, NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
