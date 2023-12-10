@@ -1,5 +1,5 @@
 #include <keyboard.h>
-int library_init = 0;
+static int library_init = 0;
 
 void ukbd_event(int code, int status){
     if(!library_init){

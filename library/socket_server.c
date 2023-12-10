@@ -1,4 +1,6 @@
 #include <keyboard.h>
+#include <sys/stat.h>
+
 int soc_server_fd;
 struct sockaddr_un server_from;
 struct sockaddr_un server_addr;
@@ -26,7 +28,7 @@ void socket_init() {
             ok = 0;
         }
     }
-
+    chmod(SERVER_SOCK_FILE, S_IWUSR | S_IWGRP | S_IWOTH);
 }
 int socket_destroy() {
 

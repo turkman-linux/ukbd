@@ -4,9 +4,13 @@
 #include <keyboard.h>
 
 int _start() {
+    if(getuid() != 0){
+        puts("You must be root!");
+        exit(1);
+    }
     socket_init();
+    system("modprobe uinput");
     uinput_init();
-    permission_init();
     while (1) {
         char * data = socket_read();
         int status = data[0];

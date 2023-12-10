@@ -9,7 +9,7 @@
 GtkWidget *fixed;
 GtkWidget *scrolled_window;
 Button buttons[1024];
-static int _cur = 0;
+int _cur = 0;
 
 static int num_of_row = 0;
 static int num_of_col = 0;
@@ -88,6 +88,17 @@ void update_buttons(){
     char* label;
     bool update_request = FALSE;
     for(int i=0;i<_cur;i++){
+        switch (masks[buttons[i].keycode]){
+            case 1:
+                gtk_widget_set_name(buttons[i].widget, "key_enabled");
+                break;
+            case 2:
+                gtk_widget_set_name(buttons[i].widget, "key_lock");
+                break;
+            default:
+                gtk_widget_set_name(buttons[i].widget, "key_normal");
+                break;
+        }
         if (buttons[i].update){
             label = NULL;
             if(mask_shift && mask_altgr){
@@ -111,12 +122,13 @@ void update_buttons(){
     }
 }
 
-void add_button_custom(int row, int col, float percent, GtkWidget* widget){
+void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* widget){
     Button b;
     b.widget = widget;
     b.percent = percent;
     b.col = col;
     b.row = row;
+    b.keycode = keycode;
     b.update = FALSE;
     buttons[_cur] = b;
     _cur++;
@@ -125,7 +137,7 @@ void add_button_custom(int row, int col, float percent, GtkWidget* widget){
     gtk_fixed_put(GTK_FIXED(fixed), b.widget, 0, 0);
 }
 void add_button_with_label(int keycode, int row, int col, float percent, char* label){
-    add_button_custom(row, col, percent, create_button(keycode, label));
+    add_button_custom(keycode, row, col, percent, create_button(keycode, label));
     buttons[_cur-1].label = label;
 }
 

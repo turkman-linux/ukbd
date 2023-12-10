@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <gui.h>
 #include <linux/uinput.h>
+#include <keyboard.h>
 // X11 code + 8 = uinput code
 #define BUTTON(A) create_button(A, get_label_from_keycode(A + 8, 0))
 // keyboard dimensin to percent
@@ -13,6 +14,13 @@ void main(int argc, char **argv)
     // init gtk
     gtk_init(&argc, &argv);
     window = init_window();
+
+    if (access( SERVER_SOCK_FILE, F_OK ) != 0 ) {
+       gtk_container_add(window, gtk_label_new("Failed to connect service!"));
+       gtk_widget_show_all(window);
+       gtk_main();
+       return 0;
+    } 
 
     keyboardview_init(window);
 
@@ -35,7 +43,7 @@ void main(int argc, char **argv)
     for (int i=1;i<=10;i++){
         char str[4] = "F";
         sprintf(str, "F%d", i);
-        add_button_with_label(i+59, i, 0, l(2), str);
+        add_button_with_label(i+58, i, 0, l(2), str);
     }
     add_button_with_label(KEY_F11, 11, 0, l(2), "F11");
     add_button_with_label(KEY_F12, 12, 0, l(2), "F12");
@@ -62,19 +70,19 @@ void main(int argc, char **argv)
     add_button_with_label(KEY_PAGEDOWN, 15, 3, l(2), "PgDn");
 
     // third row
-    add_button_custom(0, 4, l(3.6), create_toggle_button(KEY_LEFTSHIFT, "Shift"));
+    add_button_custom(KEY_LEFTSHIFT, 0, 4, l(3.6), create_toggle_button(KEY_LEFTSHIFT, "Shift"));
     add_buttons(4, 1, KEY_Z, KEY_SLASH, l(2));
-    add_button_custom(12, 4, l(2.3), create_toggle_button(KEY_LEFTSHIFT, "Shift"));
+    add_button_custom(KEY_RIGHTSHIFT, 12, 4, l(2.3), create_toggle_button(KEY_RIGHTSHIFT, "Shift"));
     add_button_with_label(KEY_UP, 13, 4, l(2.3), "Up");
     add_button_with_label(KEY_END, 14, 4, l(2.3), "End");
 
     // bottom row
-    add_button_custom(0, 5, l(2.3), create_toggle_button(KEY_LEFTCTRL, "Ctrl"));
+    add_button_custom(KEY_LEFTCTRL, 0, 5, l(2.3), create_toggle_button(KEY_LEFTCTRL, "Ctrl"));
     add_button_with_label(KEY_LEFTMETA, 1, 5, l(2.3), "Lnx");
-    add_button_custom(2, 5, l(2.3), create_toggle_button(KEY_LEFTALT, "Alt"));
+    add_button_custom(KEY_LEFTALT, 2, 5, l(2.3), create_toggle_button(KEY_LEFTALT, "Alt"));
     add_button_with_label(KEY_SPACE, 3, 5, l(12.4), "____");
-    add_button_custom(4, 5, l(2.3), create_toggle_button(KEY_RIGHTALT, "Alt"));
-    add_button_custom(5, 5, l(2), create_toggle_button(KEY_RIGHTCTRL, "Ctrl"));
+    add_button_custom(KEY_RIGHTALT, 4, 5, l(2.3), create_toggle_button(KEY_RIGHTALT, "Alt"));
+    add_button_custom(KEY_RIGHTCTRL, 5, 5, l(2), create_toggle_button(KEY_RIGHTCTRL, "Ctrl"));
     add_button_with_label(KEY_LEFT, 6, 5, l(2.3), "LEFT");
     add_button_with_label(KEY_DOWN, 7, 5, l(2.3), "DOWN");
     add_button_with_label(KEY_RIGHT, 8, 5, l(2.3), "RIGHT");
