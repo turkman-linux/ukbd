@@ -8,8 +8,11 @@ int _start() {
         puts("You must be root!");
         exit(1);
     }
+    if (access("/dev/uinput", F_OK ) != 0 ) {
+        puts("Please enable uinput kernel module!");
+        exit(2);
+    }
     socket_init();
-    system("modprobe uinput");
     uinput_init();
     while (1) {
         char * data = socket_read();
