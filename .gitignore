@@ -1,3 +1,8 @@
 build/
 __pycache__
 *.o
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/ukbd.*
+debian/ukbd/

@@ -1,13 +1,14 @@
+SHELL=/bin/bash
 DESTDIR=/
 LIBDIR=/lib/
-SERVICE=systemd
+SERVICE=openrc
 library_files = $(patsubst %.c, %.o, $(wildcard library/*.c))
 service_files = $(patsubst %.c, %.o, $(wildcard service/*.c))
 gtk_files = $(patsubst %.c, %.o, $(wildcard gtk/*.c))
 
 GTK_FLAGS = `pkg-config --cflags gtk+-3.0` -g3
 
-all: clean _build
+all: clean build
 
 %.o: %.c
 	$(CC) -c $< -o $@ -Ilibrary -fPIC $(CFLAGS) $(GTK_FLAGS) -Igtk
@@ -55,7 +56,7 @@ test-x86:
 	LD_LIBRARY_PATH=$$PWD/build build/test-asm
 
 
-_build: libukbd main gui-gtk
+build: libukbd main gui-gtk
 
 install:
 	mkdir -p $(DESTDIR)/usr/bin
