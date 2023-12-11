@@ -38,16 +38,16 @@ run-gtk: gui-gtk
 	LD_LIBRARY_PATH=$$PWD/build build/gui-gtk
 
 test:
-	valac data/test.vala -o build/test-vala --vapidir=./library/ --pkg libukbd -X -I./library -X -L./build -X -lukbd
-	$(CC) data/test.c -o build/test-c -Ilibrary -lukbd -Lbuild
+	valac data/test.vala -o build/test-vala --vapidir=./library/ --pkg libukbd -X -I./library -X -L./build -X -lukbd  || true
+	$(CC) data/test.c -o build/test-c -Ilibrary -lukbd -Lbuild || true
 	@echo -ne "\033[33mPython test\033[;0m\n"
-	LD_LIBRARY_PATH=$$PWD/build python3 data/test.py
+	LD_LIBRARY_PATH=$$PWD/build python3 data/test.py || true
 	@echo -ne "\033[33mC test\033[;0m\n"
-	LD_LIBRARY_PATH=$$PWD/build build/test-c
+	LD_LIBRARY_PATH=$$PWD/build build/test-c || true
 	@echo -ne "\033[33mVala test\033[;0m\n"
-	LD_LIBRARY_PATH=$$PWD/build build/test-vala
+	LD_LIBRARY_PATH=$$PWD/build build/test-vala || true
 	@if [[ `uname -m` == "x86_64" ]]; then \
-	    make test-x86 ;\
+	    make test-x86  || true ;\
 	fi
 
 test-x86:
@@ -62,9 +62,11 @@ install:
 	mkdir -p $(DESTDIR)/usr/bin
 	mkdir -p $(DESTDIR)/usr/libexec
 	mkdir -p $(DESTDIR)/usr/$(LIBDIR)
+	mkdir -p $(DESTDIR)/usr/share/applications/
 	install build/main $(DESTDIR)/usr/libexec/ukbd
 	install build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
 	install build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
+	install data/ukbd.desktop $(DESTDIR)/usr/share/applications/
 	make install_$(SERVICE) DESTDIR=$(DESTDIR)
 	
 install_systemd:

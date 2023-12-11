@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Ukbd Screen Keyboard
+Name[tr]=Ukbd Ekran Klavyesi
+GenericName=Virtual Keyboard
+GenericName[tr]=Sanal Klavye
+Comment=Screen keyboard written C and Gtk
+Comment[tr]=C ve Gtk ile yazılmış ekran klavyesi
+Exec=ukbd-gtk
+Icon=ukbd
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true
