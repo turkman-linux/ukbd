@@ -10,4 +10,4 @@ Icon=ukbd
 Terminal=false
 Type=Application
 Categories=Utility;
-StartupNotify=true
+StartupNotify=false

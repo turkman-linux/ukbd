@@ -63,10 +63,12 @@ install:
 	mkdir -p $(DESTDIR)/usr/libexec
 	mkdir -p $(DESTDIR)/usr/$(LIBDIR)
 	mkdir -p $(DESTDIR)/usr/share/applications/
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/
 	install build/main $(DESTDIR)/usr/libexec/ukbd
 	install build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
 	install build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
 	install data/ukbd.desktop $(DESTDIR)/usr/share/applications/
+	install data/icon.svg $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/ukbd.svg
 	make install_$(SERVICE) DESTDIR=$(DESTDIR)
 	
 install_systemd:
