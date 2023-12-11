@@ -1,0 +1,23 @@
+#!/sbin/openrc-run
+# Copyright 1999-2017 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+depend() {
+	need dbus
+}
+
+start() {
+	ebegin "Starting ukbd"
+
+	modprobe uinput
+	start-stop-daemon --start --quiet \
+		--pidfile "/run/ukbd.pid" \
+		--exec "/usr/libexec/ukbd" -- --daemon
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping ukbd"
+	start-stop-daemon --stop --quiet --pidfile "/run/ukbd.pid"
+	eend $?
+}

@@ -1,0 +1,13 @@
+Source: ukbd
+Section: utils
+Priority: optional
+Maintainer: Your Name <your.email@example.org>
+Build-Depends: make, libgtk-3-dev
+Standards-Version: 4.3.0
+Homepage: https://example.org
+
+Package: ukbd
+Architecture: any
+Depends: libgtk-3-0
+Description: Edit me
+ Edit me. I am description

@@ -1,3 +1,6 @@
+DESTDIR=/
+LIBDIR=/lib/
+SERVICE=systemd
 library_files = $(patsubst %.c, %.o, $(wildcard library/*.c))
 service_files = $(patsubst %.c, %.o, $(wildcard service/*.c))
 gtk_files = $(patsubst %.c, %.o, $(wildcard gtk/*.c))
@@ -7,7 +10,7 @@ GTK_FLAGS = `pkg-config --cflags gtk+-3.0` -g3
 all: clean _build
 
 %.o: %.c
-	$(CC) -c $< -o $@ -Ilibrary -fPIC $(GTK_FLAGS) -Igtk
+	$(CC) -c $< -o $@ -Ilibrary -fPIC $(CFLAGS) $(GTK_FLAGS) -Igtk
 
 main: $(service_files)
 	mkdir -p build
@@ -52,7 +55,28 @@ test-x86:
 	LD_LIBRARY_PATH=$$PWD/build build/test-asm
 
 
-_build: libukbd main
+_build: libukbd main gui-gtk
+
+install:
+	mkdir -p $(DESTDIR)/usr/bin
+	mkdir -p $(DESTDIR)/usr/libexec
+	mkdir -p $(DESTDIR)/usr/$(LIBDIR)
+	install build/main $(DESTDIR)/usr/libexec/ukbd
+	install build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
+	install build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
+	make install_$(SERVICE) DESTDIR=$(DESTDIR)
+	
+install_systemd:
+	mkdir -p $(DESTDIR)/lib/systemd/system/
+	install data/systemd.service $(DESTDIR)/lib/systemd/system/ukbd.service
+
+install-openrc:
+	mkdir -p $(DESTDIR)/etc/init.d
+	install data/openrc.service $(DESTDIR)/etc/init.d/ukbd
+	
+install-sysvinit:
+	mkdir -p $(DESTDIR)/etc/init.d
+	install data/sysvinit.service $(DESTDIR)/etc/init.d/ukbd
 
 clean:
 	rm -vfr $(service_files) $(gtk_files) $(library_files) build */__pycache__

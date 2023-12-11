@@ -1,0 +1,13 @@
+[Unit]
+Description=Uinut keyboard service
+Before=dbus.service
+
+[Service]
+Type=simple
+User=root
+ExecStartPre=modprobe uinput
+ExecStart=/usr/libexec/ukbd
+Restart=always
+
+[Install]
+RequiredBy=multi-user.target
