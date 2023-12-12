@@ -20,7 +20,9 @@ static void button_clicked(GtkWidget *button, gpointer data) {
         }
     }
     update_buttons();
-    g_timeout_add(300, update_buttons, NULL);
+    if(number == KEY_CAPSLOCK){
+        g_timeout_add(300, update_buttons, NULL);
+    }
 }
 
 GtkButton* create_button(int number, char* label){
