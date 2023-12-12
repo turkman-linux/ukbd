@@ -12,7 +12,8 @@ start() {
 	modprobe uinput
 	start-stop-daemon --start --quiet \
 		--pidfile "/run/ukbd.pid" \
-		--exec "/usr/libexec/ukbd" -- --daemon
+		--exec "/usr/libexec/ukbd" \
+                --background
 	eend $?
 }
 
