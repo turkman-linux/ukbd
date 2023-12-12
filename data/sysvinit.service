@@ -10,7 +10,10 @@
 case "$1" in
 start)
   modprobe uinput
-  /usr/libexec/ukbd
+  start-stop-daemon --start --quiet  --pidfile "/run/ukbd.pid" --exec "/usr/libexec/ukbd" --background 
+  ;;
+stop)
+  start-stop-daemon --stop --quiet --pidfile "/run/ukbd.pid"
   ;;
 *)
   exit 0
