@@ -11,14 +11,9 @@ int *masks;
 static void button_clicked(GtkWidget *button, gpointer data) {
     int number = (int)data;
     printf("Normal: %d\n",number);
-    for(int i=0;i<255;i++){
-        if(masks[i] != 0){
-            ukbd_press(i);
-        }
-    }
     ukbd_send(number);
     for(int i=0;i<255;i++){
-        if(masks[i] != 0){
+        if(masks[i] != 2){
             ukbd_release(i);
         }
         if(masks[i] == 1){
@@ -45,9 +40,11 @@ static void toggle_button_clicked(GtkWidget *button, gpointer data) {
     switch(masks[number]){
         case 0:
             masks[number] = 1;
+            ukbd_press(number);
             break;
         case 1:
             masks[number] = 2;
+            ukbd_press(number);
             break;
         default:
             masks[number] = 0;
