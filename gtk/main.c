@@ -93,6 +93,7 @@ void main(int argc, char **argv) {
     
 
     gtk_widget_show_all(window);
+    update_buttons();
     
     // main event
     gtk_main();

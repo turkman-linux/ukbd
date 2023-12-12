@@ -13,14 +13,14 @@ static void button_clicked(GtkWidget *button, gpointer data) {
     printf("Normal: %d\n",number);
     ukbd_send(number);
     for(int i=0;i<255;i++){
-        if(masks[i] != 2){
-            ukbd_release(i);
-        }
         if(masks[i] == 1){
             masks[i] = 0;
+            printf("release %d\n", i);
+            ukbd_release(i);
         }
     }
     update_buttons();
+    g_timeout_add(300, update_buttons, NULL);
 }
 
 GtkButton* create_button(int number, char* label){
@@ -40,17 +40,20 @@ static void toggle_button_clicked(GtkWidget *button, gpointer data) {
     switch(masks[number]){
         case 0:
             masks[number] = 1;
+            printf("press %d\n", number);
             ukbd_press(number);
             break;
         case 1:
             masks[number] = 2;
+            printf("press %d\n", number);
             ukbd_press(number);
             break;
         default:
             masks[number] = 0;
+            printf("release %d\n", number);
+            ukbd_release(number);
             break;
     }
-    printf("Toggle: %d\n",masks[number]);
     update_buttons();
 }
 

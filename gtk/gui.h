@@ -6,6 +6,7 @@ GtkButton* create_button(gint num, gchar* label);
 GtkButton* create_toggle_button(gint number, gchar* label);
 
 char* get_label_from_keycode(int code, int group);
+bool is_capslock_enabled();
 
 typedef struct _object {
     GtkWidget *widget;

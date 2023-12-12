@@ -18,7 +18,7 @@ static int num_of_row = 0;
 static int num_of_col = 0;
 
 extern int *masks;
-
+bool is_capslock_on = false;
 
 static float find_item_percent(int col, int row){
     float m=0;
@@ -99,6 +99,7 @@ void add_button(int keycode, int row, int col, float percent){
 void update_buttons(){
     char* label;
     bool update_request = FALSE;
+    is_capslock_on = is_capslock_enabled();
     for(int i=0;i<_cur;i++){
         switch (masks[buttons[i].keycode]){
             case 1:
@@ -111,9 +112,19 @@ void update_buttons(){
                 gtk_widget_set_name(buttons[i].widget, "key_normal");
                 break;
         }
+        if(buttons[i].keycode == KEY_CAPSLOCK){
+            if(is_capslock_on){
+                gtk_widget_set_name(buttons[i].widget, "key_enabled");
+            }else{
+                gtk_widget_set_name(buttons[i].widget, "key_normal");
+            }
+    
+        }
         if (buttons[i].update){
             label = NULL;
-            if(mask_shift && mask_altgr){
+            if(is_capslock_on){
+                label = get_label_from_keycode(buttons[i].keycode + 8, 1);
+            }else if(mask_shift && mask_altgr){
                 label = get_label_from_keycode(buttons[i].keycode + 8, 3);
             }else if(mask_altgr){
                 label = get_label_from_keycode(buttons[i].keycode + 8, 2);

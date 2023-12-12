@@ -20,9 +20,11 @@ GtkWidget* init_window(){
       }\
       #key_enabled { \
          background: #8e0000; \
+          color: #ffffff; \
       } \
       #key_lock { \
           background: #00008e; \
+          color: #ffffff; \
       } ";
     gtk_css_provider_load_from_data(cssProvider, cssData, -1, NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),

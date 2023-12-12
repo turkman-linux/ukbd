@@ -2,6 +2,7 @@
 #include <X11/XKBlib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #define iseq(A,B) strcmp(A,B)==0
@@ -24,6 +25,17 @@ char* get_label_from_keycode(int code, int level){
         return "";
     }
 }
+
+bool is_capslock_enabled(){
+   XKeyboardState x;
+   XGetKeyboardControl(display, &x);
+   if(x.led_mask & 1){
+      return true;
+   }
+   return false;
+}
+
+
 
 #define str_check(A, B, C) if(iseq(A,B)){return C;}
 
