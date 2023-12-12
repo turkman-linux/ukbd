@@ -36,3 +36,6 @@ void ukbd.press(int code);
 void ukbd.send(int code);
 void ukbd.release(int code);
 ```
+# License
+
+Licensed under GPLv3+. See file LICENSE for details.
