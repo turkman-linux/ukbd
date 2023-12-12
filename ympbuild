@@ -17,6 +17,8 @@ arch=('x86_64')
 
 cd uinput-keyboard-master
 
+unset CFLAGS
+
 build () {
     make build
 }
