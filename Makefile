@@ -77,11 +77,11 @@ install_systemd:
 	mkdir -p $(DESTDIR)/lib/systemd/system/
 	install data/systemd.service $(DESTDIR)/lib/systemd/system/ukbd.service
 
-install-openrc:
+install_openrc:
 	mkdir -p $(DESTDIR)/etc/init.d
 	install data/openrc.service $(DESTDIR)/etc/init.d/ukbd
 	
-install-sysvinit:
+install_sysvinit:
 	mkdir -p $(DESTDIR)/etc/init.d
 	install data/sysvinit.service $(DESTDIR)/etc/init.d/ukbd
 
