@@ -64,11 +64,13 @@ install:
 	mkdir -p $(DESTDIR)/usr/$(LIBDIR)
 	mkdir -p $(DESTDIR)/usr/share/applications/
 	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/
+	mkdir -p $(DESTDIR)/usr/share/glib-2.0/schemas/
 	install build/main $(DESTDIR)/usr/libexec/ukbd
 	install build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
 	install build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
 	install data/ukbd.desktop $(DESTDIR)/usr/share/applications/
 	install data/icon.svg $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/ukbd.svg
+	install data/gsettings.xml $(DESTDIR)/usr/share/glib-2.0/schemas/org.turkman.ukbd.gschema.xml
 	make install_$(SERVICE) DESTDIR=$(DESTDIR)
 	
 install_systemd:
