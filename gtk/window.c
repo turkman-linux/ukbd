@@ -9,6 +9,7 @@ GtkWidget* init_window(){
     gtk_widget_set_size_request(GTK_WINDOW(window), 666,222);
     gtk_window_set_accept_focus(GTK_WINDOW(window), FALSE);
     gtk_window_set_icon_name(window, "ukbd");
+    g_signal_connect(window, "destroy", gtk_main_quit, NULL);
     
     GtkCssProvider *cssProvider = gtk_css_provider_new();
     const gchar *cssData = "* {\
