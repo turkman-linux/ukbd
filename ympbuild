@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+name='ukbd'
+release='1'
+version='0.0.1'
+url='https://turkman.gitlab.io'
+description='Uinput keyboard'
+email='aliriza.keskin@pardus.org.tr'
+maintainer='aliriza'
+license=('GPLv3')
+source=('https://github.com/sulincix-other/uinput-keyboard/archive/refs/heads/master.zip')
+depends=(gtk3)
+makedepends=()
+md5sums=('SKIP')
+group=()
+uses=()
+arch=('x86_64')
+
+cd uinput-keyboard-master
+
+build () {
+    make build
+}
+
+package () {
+    make install
+}
+
