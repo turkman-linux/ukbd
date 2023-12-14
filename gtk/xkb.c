@@ -6,6 +6,7 @@
 #include <string.h>
 
 extern char* str_to_label(char* str);
+char* unicodeToString(const char* unicodeString);
 Display *display;
 
 static int i, j;
@@ -35,11 +36,26 @@ char* get_label_from_keycode(int code, int level){
             return "";
         }else if (0 == strcmp(sym,"VoidSymbol")){
             return "";
+        }else if(strlen(sym) > 3 && startswith(sym,"U")){
+            return unicodeToString(sym);
         }
         return str_to_label(sym);
     }else{
         return "";
     }
+}
+
+char* unicodeToString(const char* unicodeString) {
+    // Convert the Unicode string to an integer
+    unsigned int unicodeValue = (unsigned int)strtol(unicodeString + 1, NULL, 16);
+
+    // Allocate memory for the string representation of the Unicode character
+    char* result = (char*)malloc(5); // Sufficient for the UTF-8 encoding of a single character
+
+    // Convert the Unicode value to a string and store it in the result
+    sprintf(result, "%lc", (int8_t)unicodeValue);
+
+    return result;
 }
 
 bool is_capslock_enabled(){
