@@ -8,6 +8,7 @@
 extern char* str_to_label(char* str);
 Display *display;
 
+static int i, j;
 int startswith(const char* data, const char* f) {
     i = strlen(data);
     j = strlen(f);
@@ -32,7 +33,7 @@ char* get_label_from_keycode(int code, int level){
     if(sym){
         if(startswith(sym,"dead_")){
             return "";
-        }else if (strcmp(sym,"VoidSymbol")){
+        }else if (0 == strcmp(sym,"VoidSymbol")){
             return "";
         }
         return str_to_label(sym);
