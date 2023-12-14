@@ -88,13 +88,12 @@ void main(int argc, char **argv) {
     add_button_with_label(KEY_DOWN, 7, 5, l(2.3), "DOWN");
     add_button_with_label(KEY_RIGHT, 8, 5, l(2.3), "RIGHT");
 
-    // trigger resize event
-    reallocate_buttons(666, 222);
-    
 
     gtk_widget_show_all(window);
     update_buttons();
-    
+    // trigger resize event
+    reallocate_buttons(666, 222);
+
     // main event
     gtk_main();
 }
