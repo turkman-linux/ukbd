@@ -8,6 +8,17 @@
 extern char* str_to_label(char* str);
 Display *display;
 
+int startswith(const char* data, const char* f) {
+    i = strlen(data);
+    j = strlen(f);
+
+    if (i < j) {
+        return 0;
+    }
+
+    return strncmp(data, f, j) == 0;
+}
+
 char* get_label_from_keycode(int code, int level){
     if(display == NULL){
         display = XOpenDisplay(NULL);
@@ -19,6 +30,11 @@ char* get_label_from_keycode(int code, int level){
     KeySym keysym = XkbKeycodeToKeysym(display, code, 0, level);
     char* sym = XKeysymToString(keysym);
     if(sym){
+        if(startswith(sym,"dead_")){
+            return "";
+        }else if (strcmp(sym,"VoidSymbol")){
+            return "";
+        }
         return str_to_label(sym);
     }else{
         return "";
@@ -33,7 +49,5 @@ bool is_capslock_enabled(){
    }
    return false;
 }
-
-
 
 

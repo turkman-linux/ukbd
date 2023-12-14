@@ -7,7 +7,10 @@ cat /usr/include/X11/keysymdef.h | grep "^#define " | tr -s " " | while read lin
     label=$(echo "$line" | cut -f2 -d" " | sed "s/^XK_//g")
     code=$(echo "$line" | cut -f5 -d" " | grep "^U+")
     code=$(printf "${code/U+/"\U"}")
-    if [[ "$code" != "" && "$code" != "$label" ]] ; then
+    if echo $line | grep "deprecated" >/dev/null ; then
+        echo "    str_check(str, \"$label\", \"\");"
+    fi
+    elif [[ "$code" != "" && "$code" != "$label" ]] ; then
         echo "    str_check(str, \"$label\", \"$code\");"
     fi
 done | sed 's/\\/\\\\/g' | sed 's/"""/"\\""/g'
