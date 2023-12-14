@@ -7,6 +7,8 @@
 
 int *masks;
 
+bool update_required = false;
+
 
 static void button_clicked(GtkWidget *button, gpointer data) {
     int number = (int)data;
@@ -19,10 +21,13 @@ static void button_clicked(GtkWidget *button, gpointer data) {
             ukbd_release(i);
         }
     }
-    update_buttons();
+    if(update_required){
+        update_buttons();
+    }
     if(number == KEY_CAPSLOCK){
         g_timeout_add(300, update_buttons, NULL);
     }
+    update_required = false;
 }
 
 GtkButton* create_button(int number, char* label){
@@ -57,6 +62,7 @@ static void toggle_button_clicked(GtkWidget *button, gpointer data) {
             break;
     }
     update_buttons();
+    update_required = true;
 }
 
 
