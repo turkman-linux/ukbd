@@ -27,7 +27,8 @@ libukbd: $(library_files)
 
 gui-gtk: libukbd $(gtk_files)
 	mkdir -p build
-	$(CC) $(gtk_files) $(shell pkg-config --libs gtk+-3.0) \
+	bash gtk/generate_keytab.sh > build/str.c
+	$(CC) $(gtk_files) build/str.c $(shell pkg-config --libs gtk+-3.0) \
 	    -lX11 \
 	    -Ilibrary -lukbd  -Lbuild -o build/gui-gtk
 
