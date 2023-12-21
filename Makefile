@@ -31,6 +31,7 @@ gui-gtk: libukbd $(gtk_files)
 	$(CC) $(gtk_files) build/str.c $(shell pkg-config --libs gtk+-3.0) \
 	    -lX11 \
 	    -Ilibrary -lukbd  -Lbuild -o build/gui-gtk
+	$(CC) atspi/atspi.c -o build/atspi  $(shell pkg-config --cflags --libs atspi-2) 
 
 run: build
 	LD_LIBRARY_PATH=$$PWD/build build/main
@@ -69,6 +70,7 @@ install:
 	install build/main $(DESTDIR)/usr/libexec/ukbd
 	install build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
 	install build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
+	install build/atspi $(DESTDIR)/usr/bin/ukbd-atspi
 	install data/ukbd.desktop $(DESTDIR)/usr/share/applications/
 	install data/icon.svg $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/ukbd.svg
 	install data/gsettings.xml $(DESTDIR)/usr/share/glib-2.0/schemas/org.turkman.ukbd.gschema.xml
