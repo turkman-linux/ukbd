@@ -26,3 +26,5 @@ void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* 
 
 void reload_window();
 void update_buttons();
+
+void single_instance();
