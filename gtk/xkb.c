@@ -32,11 +32,12 @@ char* get_label_from_keycode(int code, int level){
     KeySym keysym = XkbKeycodeToKeysym(display, code, 0, level);
     char* sym = XKeysymToString(keysym);
     if(sym){
+        puts(sym);
         if(startswith(sym,"dead_")){
             return "";
         }else if (0 == strcmp(sym,"VoidSymbol")){
             return "";
-        }else if(strlen(sym) > 3 && startswith(sym,"U")){
+        }else if(strlen(sym) == 5 && startswith(sym,"U")){
             return unicodeToString(sym);
         }
         return str_to_label(sym);
