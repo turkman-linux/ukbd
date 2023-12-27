@@ -28,3 +28,8 @@ void reload_window();
 void update_buttons();
 
 void single_instance();
+
+// X11 code + 8 = uinput code
+#define BUTTON(A) create_button(A, get_label_from_keycode(A + 8, 0))
+// keyboard dimensin to percent
+#define l(A) A*100/30.5

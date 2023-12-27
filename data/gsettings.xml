@@ -17,5 +17,9 @@
       <default l10n="messages">222</default>
       <summary>height</summary>
     </key>
+    <key name="layout" type="i">
+      <default l10n="messages">0</default>
+      <summary>layout</summary>
+    </key>
   </schema>
 </schemalist>

@@ -32,7 +32,6 @@ char* get_label_from_keycode(int code, int level){
     KeySym keysym = XkbKeycodeToKeysym(display, code, 0, level);
     char* sym = XKeysymToString(keysym);
     if(sym){
-        puts(sym);
         if(startswith(sym,"dead_")){
             return "";
         }else if (0 == strcmp(sym,"VoidSymbol")){
@@ -59,13 +58,11 @@ char* unicodeToString(const char* unicodeString) {
     return result;
 }
 
+XKeyboardState x;
+
 bool is_capslock_enabled(){
-   XKeyboardState x;
    XGetKeyboardControl(display, &x);
-   if(x.led_mask & 1){
-      return true;
-   }
-   return false;
+   return x.led_mask & 1 ;
 }
 
 

@@ -12,12 +12,12 @@ bool update_required = false;
 
 static void button_clicked(GtkWidget *button, gpointer data) {
     int number = (int)data;
-    printf("Normal: %d\n",number);
+    // printf("Normal: %d\n",number);
     ukbd_send(number);
     for(int i=0;i<255;i++){
         if(masks[i] == 1){
             masks[i] = 0;
-            printf("release %d\n", i);
+            // printf("release %d\n", i);
             ukbd_release(i);
         }
     }
