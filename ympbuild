@@ -15,7 +15,7 @@ group=()
 uses=()
 arch=('x86_64')
 
-cd uinput-keyboard-master
+cd ukbd-master
 
 unset CFLAGS
 
