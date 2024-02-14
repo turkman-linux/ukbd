@@ -40,12 +40,16 @@ GtkWidget* init_window(){
          padding: 0px; \
          margin: 0px; \
       }\
+      window {\
+         background: #1b1b1b; \
+      }\
       #key_enabled { \
          background: #8e0000; \
          color: #ffffff; \
       } \
       #key_normal { \
          background: rgba(255, 255, 255, 0.2); \
+         border: none; \
          color: #ffffff; \
       } \
       #key_lock { \

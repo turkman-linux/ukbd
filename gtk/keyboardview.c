@@ -76,7 +76,7 @@ void reallocate_buttons(int window_width, int window_height){
         gtk_fixed_move(fixed, buttons[i].widget, new_x + padding , new_y + padding);
         if (old_size != new_size){
             if (buttons[i].image) {
-                gtk_image_set_pixel_size(buttons[i].image, new_size*3);
+                gtk_image_set_pixel_size(buttons[i].image, new_size*2);
             }else{
                 gtk_widget_override_font(buttons[i].widget, fontdesc);
 
