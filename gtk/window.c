@@ -52,6 +52,9 @@ GtkWidget* init_window(){
          border: none; \
          color: #ffffff; \
       } \
+      #key_normal:active {\
+         background: rgba(255, 255, 255, 0.5); \
+      }\
       #key_lock { \
           background: #00008e; \
           color: #ffffff; \

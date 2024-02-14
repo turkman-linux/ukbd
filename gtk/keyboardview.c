@@ -52,16 +52,15 @@ static int find_num_of_col(){
     return m;
 }
 
-
+#define padding 5
 static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpointer user_data) {
     // Get the width of the window
-    int window_width = allocation->width;
-    int window_height = allocation->height;
+    int window_width = allocation->width - padding;
+    int window_height = allocation->height - padding;
     reallocate_buttons(window_width, window_height);
 }
 static int old_size = 10;
 #define font_step 3
-#define padding 3
 void reallocate_buttons(int window_width, int window_height){
     int new_size = font_step*((MIN((window_width - padding*2)/3, (window_height - padding*2))/22) /font_step);
     pango_font_description_set_size(fontdesc, new_size* PANGO_SCALE);
@@ -93,6 +92,7 @@ void keyboardview_init(GtkWidget *window){
     gtk_container_add(GTK_CONTAINER(window), scrolled_window);
     gtk_container_add(GTK_CONTAINER(scrolled_window), fixed);
     gtk_scrolled_window_set_policy(scrolled_window, GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
+    gtk_widget_set_name(scrolled_window, "scrolled");
     g_signal_connect(window, "size-allocate", G_CALLBACK(on_window_resized), NULL);
 }
 
