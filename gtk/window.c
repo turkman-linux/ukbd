@@ -36,20 +36,22 @@ GtkWidget* init_window(){
     g_signal_connect(window, "delete-event", G_CALLBACK(window_quit), NULL);
     
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    const gchar *cssData = "* {\
+    const gchar *cssData = " *, *>* { \
          padding: 0px; \
          margin: 0px; \
-         border-radius: 0px;\
-         font-family: monospace; \
       }\
       #key_enabled { \
          background: #8e0000; \
-          color: #ffffff; \
+         color: #ffffff; \
+      } \
+      #key_normal { \
+         background: rgba(255, 255, 255, 0.2); \
+         color: #ffffff; \
       } \
       #key_lock { \
           background: #00008e; \
           color: #ffffff; \
-      } ";
+      }";
     gtk_css_provider_load_from_data(cssProvider, cssData, -1, NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
                                               GTK_STYLE_PROVIDER(cssProvider),

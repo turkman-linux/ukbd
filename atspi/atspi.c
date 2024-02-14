@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <gtk/gtk.h>
+
 
 static void on_event (const AtspiEvent *event, void *data){
   AtspiAccessible *application = NULL;
@@ -26,6 +28,11 @@ static void on_event (const AtspiEvent *event, void *data){
 }
 
 int main (int argc, gchar **argv) {
+  GSettings *settings = g_settings_new("org.turkman.ukbd");
+  if(!g_settings_get_boolean(settings, "atspi")){
+      return 0;
+  }
+
   AtspiEventListener *listener;
   atspi_init ();
   listener = atspi_event_listener_new (on_event, NULL, NULL);

@@ -9,6 +9,10 @@
       <default l10n="messages">0</default>
       <summary>Y offset</summary>
     </key>
+    <key name="atspi" type="b">
+      <default l10n="messages">false</default>
+      <summary>Atspi enabled</summary>
+    </key>
     <key name="width" type="i">
       <default l10n="messages">666</default>
       <summary>width</summary>

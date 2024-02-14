@@ -10,10 +10,18 @@ int *masks;
 bool update_required = false;
 
 
-static void button_clicked(GtkWidget *button, gpointer data) {
+void button_clicked(GtkWidget *button, gpointer data) {
     int number = (int)data;
     // printf("Normal: %d\n",number);
-    ukbd_send(number);
+    for(int i=0;i<255;i++){
+        if(masks[i] > 0){
+            // printf("release %d\n", i);
+            ukbd_press(i);
+        }
+    }
+    usleep(100000);
+    ukbd_press(number);
+    usleep(100000);
     for(int i=0;i<255;i++){
         if(masks[i] == 1){
             masks[i] = 0;
@@ -21,6 +29,7 @@ static void button_clicked(GtkWidget *button, gpointer data) {
             ukbd_release(i);
         }
     }
+    ukbd_release(number);
     if(update_required){
         update_buttons();
     }
@@ -47,18 +56,15 @@ static void toggle_button_clicked(GtkWidget *button, gpointer data) {
     switch(masks[number]){
         case 0:
             masks[number] = 1;
-            printf("press %d\n", number);
-            ukbd_press(number);
+            //printf("press %d\n", number);
             break;
         case 1:
             masks[number] = 2;
-            printf("press %d\n", number);
-            ukbd_press(number);
+            //printf("press %d\n", number);
             break;
         default:
             masks[number] = 0;
-            printf("release %d\n", number);
-            ukbd_release(number);
+            //printf("release %d\n", number);
             break;
     }
     update_buttons();

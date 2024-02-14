@@ -6,12 +6,12 @@ library_files = $(patsubst %.c, %.o, $(wildcard library/*.c))
 service_files = $(patsubst %.c, %.o, $(wildcard service/*.c))
 gtk_files = $(patsubst %.c, %.o, $(wildcard gtk/*.c))
 
-GTK_FLAGS = `pkg-config --cflags gtk+-3.0` -g3
+GTK_FLAGS = `pkg-config --libs --cflags gtk+-3.0 gio-2.0` -g3
 
 all: clean build
 
 %.o: %.c
-	$(CC) -c $< -o $@ -Ilibrary -fPIC $(CFLAGS) $(GTK_FLAGS) -Igtk
+	$(CC) -c $< -o $@ -Ilibrary -Ibuild -fPIC $(CFLAGS) $(GTK_FLAGS) -Igtk
 
 main: $(service_files)
 	mkdir -p build
@@ -25,13 +25,14 @@ libukbd: $(library_files)
 	    -shared -fPIC -Ilibrary -nostdlib -lc
 	strip build/libukbd.so
 
+
 gui-gtk: libukbd $(gtk_files)
 	mkdir -p build
+	$(CC) atspi/atspi.c -o build/atspi  $(shell pkg-config --cflags --cflags --libs atspi-2 gtk+-3.0)
 	bash gtk/generate_keytab.sh > build/str.c
-	$(CC) $(gtk_files) build/str.c $(shell pkg-config --libs gtk+-3.0) \
+	$(CC) $(gtk_files) -Ibuild build/str.c $(GTK_FLAGS) \
 	    -lX11 \
 	    -Ilibrary -lukbd  -Lbuild -o build/gui-gtk
-	$(CC) atspi/atspi.c -o build/atspi  $(shell pkg-config --cflags --libs atspi-2) 
 
 run: build
 	LD_LIBRARY_PATH=$$PWD/build build/main
@@ -64,17 +65,23 @@ install:
 	mkdir -p $(DESTDIR)/usr/bin
 	mkdir -p $(DESTDIR)/usr/libexec
 	mkdir -p $(DESTDIR)/usr/$(LIBDIR)
+	mkdir -p $(DESTDIR)/etc/xdg/autostart/
 	mkdir -p $(DESTDIR)/usr/share/applications/
 	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/actions/
 	mkdir -p $(DESTDIR)/usr/share/glib-2.0/schemas/
 	install build/main $(DESTDIR)/usr/libexec/ukbd
 	install build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
 	install build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
 	install build/atspi $(DESTDIR)/usr/bin/ukbd-atspi
 	install data/ukbd.desktop $(DESTDIR)/usr/share/applications/
+	install data/ukbd-atspi.desktop $(DESTDIR)/etc/xdg/autostart/
 	install data/icon.svg $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/ukbd.svg
 	install data/gsettings.xml $(DESTDIR)/usr/share/glib-2.0/schemas/org.turkman.ukbd.gschema.xml
 	make install_$(SERVICE) DESTDIR=$(DESTDIR)
+	for file in data/icons/*.svg ; do \
+	    install $$file $(DESTDIR)/usr/share/icons/hicolor/scalable/actions/ ;\
+	done
 	
 install_systemd:
 	mkdir -p $(DESTDIR)/lib/systemd/system/

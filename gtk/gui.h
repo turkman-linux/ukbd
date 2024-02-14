@@ -10,6 +10,7 @@ bool is_capslock_enabled();
 
 typedef struct _object {
     GtkWidget *widget;
+    GtkWidget *image;
     int keycode;
     int col;
     int row;
@@ -19,9 +20,12 @@ typedef struct _object {
 } Button;
 
 void keyboardview_init(GtkWidget *window);
+void button_clicked(GtkWidget *button, gpointer data);
+
 void add_buttons(int row, int offset, int min, int max, float percent);
 void add_button(int keycode, int row, int col, float percent);
 void add_button_with_label(int keycode, int row, int col, float percent, char* label);
+void add_button_with_image(int keycode, int row, int col, float percent, char* name);
 void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* widget);
 
 void reload_window();

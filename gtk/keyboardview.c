@@ -61,8 +61,10 @@ static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpoin
 }
 static int old_size = 10;
 #define font_step 3
+#define padding 3
 void reallocate_buttons(int window_width, int window_height){
-    int new_size = font_step*((MIN(window_width/3, window_height)/22) /font_step);
+    int new_size = font_step*((MIN((window_width - padding*2)/3, (window_height - padding*2))/22) /font_step);
+    pango_font_description_set_size(fontdesc, new_size* PANGO_SCALE);
     for(int i=0;i<_cur;i++){
         int button_width = (int)((buttons[i].percent * window_width) / 100);
         int button_height = (int) window_height / num_of_col;
@@ -70,11 +72,15 @@ void reallocate_buttons(int window_width, int window_height){
         int new_x = (int)((new_x_percent * window_width) / 100);
         int new_y = (window_height * buttons[i].col) / num_of_col;
         // printf("%d %f %d %d \n", i, new_x_percent, new_x, new_y);
-        gtk_widget_set_size_request(buttons[i].widget, button_width, button_height);
-        gtk_fixed_move(fixed, buttons[i].widget, new_x , new_y);
+        gtk_widget_set_size_request(buttons[i].widget, button_width - padding, button_height - padding);
+        gtk_fixed_move(fixed, buttons[i].widget, new_x + padding , new_y + padding);
         if (old_size != new_size){
-            pango_font_description_set_size(fontdesc, new_size* PANGO_SCALE);
-            gtk_widget_override_font(buttons[i].widget, fontdesc);
+            if (buttons[i].image) {
+                gtk_image_set_pixel_size(buttons[i].image, new_size*3);
+            }else{
+                gtk_widget_override_font(buttons[i].widget, fontdesc);
+
+            }
         }
     }
     old_size = new_size;
@@ -95,6 +101,7 @@ void add_button(int keycode, int row, int col, float percent){
     buttons[_cur-1].update = TRUE;
     buttons[_cur-1].keycode = keycode;
 }
+
 
 void update_buttons(){
     char* label;
@@ -148,6 +155,7 @@ void update_buttons(){
 void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* widget){
     Button b;
     b.widget = widget;
+    b.image = NULL;
     b.percent = percent;
     b.col = col;
     b.row = row;
@@ -163,6 +171,18 @@ void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* 
 void add_button_with_label(int keycode, int row, int col, float percent, char* label){
     add_button_custom(keycode, row, col, percent, create_button(keycode, label));
     buttons[_cur-1].label = label;
+}
+
+
+void add_button_with_image(int keycode, int row, int col, float percent, char* name){
+    GtkButton* but = gtk_button_new();
+    g_signal_connect(but, "clicked", G_CALLBACK(button_clicked), (gpointer)keycode);
+    add_button_custom(keycode, row, col, percent, but);
+
+    buttons[_cur-1].image = gtk_image_new_from_icon_name(name, GTK_ICON_SIZE_BUTTON);
+
+    gtk_container_add(buttons[_cur-1].widget, buttons[_cur-1].image);
+    gtk_widget_show_all(buttons[_cur-1].widget);
 }
 
 void add_buttons(int row, int offset, int min, int max, float percent){
