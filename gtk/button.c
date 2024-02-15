@@ -37,9 +37,18 @@ void button_clicked(GtkWidget *button, gpointer data) {
     update_required = false;
 }
 
+void button_pressed(GtkWidget *button, gpointer data) {
+    gtk_widget_set_name(button, "key_active");
+    button_clicked(button, data);
+}
+void button_released(GtkWidget *button, gpointer data) {
+    gtk_widget_set_name(button, "key_normal");
+}
+
 GtkButton* create_button(int number, char* label){
     GtkButton* ret = gtk_button_new_with_label(label);
-    g_signal_connect(ret, "clicked", G_CALLBACK(button_clicked), (gpointer)number);
+    g_signal_connect(ret, "pressed", G_CALLBACK(button_pressed), (gpointer)number);
+    g_signal_connect(ret, "released", G_CALLBACK(button_released), (gpointer)number);
     gtk_widget_show(ret);
     return ret;
 }
