@@ -64,6 +64,7 @@ static void toggle_button_clicked(GtkWidget *button, gpointer data) {
             break;
         default:
             masks[number] = 0;
+            ukbd_release(number);
             //printf("release %d\n", number);
             break;
     }
