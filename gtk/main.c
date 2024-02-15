@@ -58,7 +58,7 @@ void main(int argc, char **argv) {
     gtk_widget_show_all(window);
     update_buttons();
     // trigger resize event
-    reallocate_buttons(666, 222);
+    reallocate_buttons(333, 111);
 
     // main event
     gtk_main();
