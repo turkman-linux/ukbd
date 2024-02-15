@@ -52,9 +52,10 @@ static int find_num_of_col(){
     return m;
 }
 
-#define padding 5
+static int padding = 5;
 static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpointer user_data) {
     // Get the width of the window
+    padding = MIN(allocation->width, allocation->height) / 44;
     int window_width = allocation->width - padding;
     int window_height = allocation->height - padding;
     reallocate_buttons(window_width, window_height);

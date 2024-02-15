@@ -20,7 +20,7 @@ GtkWidget* init_window(){
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_widget_show_all(window);
     gtk_window_set_keep_above(GTK_WINDOW(window),TRUE);
-    gtk_widget_set_size_request(GTK_WINDOW(window), 666,222);
+    gtk_widget_set_size_request(GTK_WINDOW(window), 333,111);
     gtk_window_resize(window,
         g_settings_get_int(settings, "width"),
         g_settings_get_int(settings, "height")
