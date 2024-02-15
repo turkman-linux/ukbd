@@ -19,9 +19,7 @@ void button_clicked(GtkWidget *button, gpointer data) {
             ukbd_press(i);
         }
     }
-    usleep(100000);
     ukbd_press(number);
-    usleep(100000);
     for(int i=0;i<255;i++){
         if(masks[i] == 1){
             masks[i] = 0;
