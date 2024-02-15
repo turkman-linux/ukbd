@@ -41,8 +41,12 @@ void button_pressed(GtkWidget *button, gpointer data) {
     gtk_widget_set_name(button, "key_active");
     button_clicked(button, data);
 }
+
+void button_released_event(gpointer *data) {
+    gtk_widget_set_name((GtkWidget*)data, "key_normal");
+}
 void button_released(GtkWidget *button, gpointer data) {
-    gtk_widget_set_name(button, "key_normal");
+        g_timeout_add(300, button_released_event, button);
 }
 
 GtkButton* create_button(int number, char* label){
