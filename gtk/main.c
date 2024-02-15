@@ -11,9 +11,6 @@ void main(int argc, char **argv) {
     single_instance();
     // force use X11 backend
     setenv("GDK_BACKEND", "x11", 1);
-    // force scale 1
-    setenv("GDK_SCALE", "1", 1);
-    setenv("GDK_DPI_SCALE", "1", 1);
     // init gtk
     gtk_init(&argc, &argv);
     window = init_window();
