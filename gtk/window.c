@@ -11,6 +11,7 @@ gboolean window_quit(GtkWidget* self, GdkEvent* event, gpointer user_data) {
     g_settings_set_int(settings, "height", new_height);
     g_settings_set_int(settings, "x", new_x);
     g_settings_set_int(settings, "y", new_y);
+    gtk_main_quit();
     return FALSE;
 }
 
@@ -32,7 +33,6 @@ GtkWidget* init_window(){
     gtk_window_set_accept_focus(GTK_WINDOW(window), FALSE);
     gtk_window_set_icon_name(window, "ukbd");
 
-    g_signal_connect(window, "destroy", gtk_main_quit, NULL);
     g_signal_connect(window, "delete-event", G_CALLBACK(window_quit), NULL);
     
     GtkCssProvider *cssProvider = gtk_css_provider_new();
