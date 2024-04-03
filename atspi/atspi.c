@@ -11,7 +11,7 @@ static void on_event(const AtspiEvent *event, void *data) {
         return;
     }
 
-     if (!event->detail1) {
+    if (!event->detail1) {
         return;
     }
 
@@ -20,16 +20,19 @@ static void on_event(const AtspiEvent *event, void *data) {
         fprintf(stderr, "Failed to get application from event source\n");
         return;
     }
-    printf("%s\n", application->name);
+
     if (!settings || !g_settings_get_boolean(settings, "atspi")) {
         fprintf(stderr, "AT-SPI integration not enabled or settings not found\n");
-        return ;
+        return;
     }
 
-
-    if (fork() == 0) {
-        execl("/usr/bin/ukbd-gtk", "ukbd-gtk", NULL);
-        exit(0);
+    // Check if the event is focus change event
+    if (strcmp(event->type, "object:state-changed:focused") == 0) {
+        if (fork() == 0) {
+            // Execute the virtual keyboard program
+            execl("/usr/bin/ukbd-gtk", "ukbd-gtk", NULL);
+            exit(0);
+        }
     }
 }
 

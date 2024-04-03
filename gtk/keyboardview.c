@@ -14,6 +14,8 @@ Button buttons[1024];
 int _cur = 0;
 static PangoFontDescription *fontdesc;
 
+bool update_request = FALSE;
+
 static int num_of_row = 0;
 static int num_of_col = 0;
 
@@ -93,6 +95,8 @@ void keyboardview_init(GtkWidget *window){
     gtk_scrolled_window_set_policy(scrolled_window, GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
     gtk_widget_set_name(scrolled_window, "scrolled");
     g_signal_connect(window, "size-allocate", G_CALLBACK(on_window_resized), NULL);
+    g_timeout_add(300, reload_window, NULL);
+
 }
 
 void add_button(int keycode, int row, int col, float percent){
@@ -104,7 +108,7 @@ void add_button(int keycode, int row, int col, float percent){
 
 void update_buttons(){
     char* label;
-    bool update_request = FALSE;
+    update_request = FALSE;
     is_capslock_on = is_capslock_enabled();
     for(int i=0;i<_cur;i++){
         switch (masks[buttons[i].keycode]){
