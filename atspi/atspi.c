@@ -20,6 +20,14 @@ static void on_event(const AtspiEvent *event, void *data) {
         fprintf(stderr, "Failed to get application from event source\n");
         return;
     }
+    // https://docs.gtk.org/atspi2/enum.Role.html
+    AtspiRole role = atspi_accessible_get_role(event->source, NULL);
+    if (!(role == ATSPI_ROLE_PASSWORD_TEXT ||
+          role == ATSPI_ROLE_TEXT ||
+          role == ATSPI_ROLE_ENTRY ||
+          role == ATSPI_ROLE_FORM)){
+        return;
+    }
 
     if (!settings || !g_settings_get_boolean(settings, "atspi")) {
         fprintf(stderr, "AT-SPI integration not enabled or settings not found\n");
