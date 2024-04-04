@@ -14,8 +14,6 @@ Button buttons[1024];
 int _cur = 0;
 static PangoFontDescription *fontdesc;
 
-bool update_request = FALSE;
-
 static int num_of_row = 0;
 static int num_of_col = 0;
 
@@ -54,16 +52,18 @@ static int find_num_of_col(){
     return m;
 }
 
+static int padding = 5;
 static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpointer user_data) {
     // Get the width of the window
-    int window_width = allocation->width;
-    int window_height = allocation->height;
+    padding = MIN(allocation->width, allocation->height) / 44;
+    int window_width = allocation->width - padding;
+    int window_height = allocation->height - padding;
     reallocate_buttons(window_width, window_height);
 }
 static int old_size = 10;
 #define font_step 3
 void reallocate_buttons(int window_width, int window_height){
-    int new_size = font_step*((MIN((window_width)/3, (window_height))/22) /font_step);
+    int new_size = font_step*((MIN((window_width - padding*2)/3, (window_height - padding*2))/22) /font_step);
     pango_font_description_set_size(fontdesc, new_size* PANGO_SCALE);
     for(int i=0;i<_cur;i++){
         int button_width = (int)((buttons[i].percent * window_width) / 100);
@@ -72,8 +72,8 @@ void reallocate_buttons(int window_width, int window_height){
         int new_x = (int)((new_x_percent * window_width) / 100);
         int new_y = (window_height * buttons[i].col) / num_of_col;
         // printf("%d %f %d %d \n", i, new_x_percent, new_x, new_y);
-        gtk_widget_set_size_request(buttons[i].widget, button_width, button_height);
-        gtk_fixed_move(fixed, buttons[i].widget, new_x, new_y);
+        gtk_widget_set_size_request(buttons[i].widget, button_width - padding, button_height - padding);
+        gtk_fixed_move(fixed, buttons[i].widget, new_x + padding , new_y + padding);
         if (old_size != new_size){
             if (buttons[i].image) {
                 gtk_image_set_pixel_size(buttons[i].image, new_size*2);
@@ -95,8 +95,6 @@ void keyboardview_init(GtkWidget *window){
     gtk_scrolled_window_set_policy(scrolled_window, GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
     gtk_widget_set_name(scrolled_window, "scrolled");
     g_signal_connect(window, "size-allocate", G_CALLBACK(on_window_resized), NULL);
-    g_timeout_add(300, reload_window, NULL);
-
 }
 
 void add_button(int keycode, int row, int col, float percent){
@@ -108,7 +106,7 @@ void add_button(int keycode, int row, int col, float percent){
 
 void update_buttons(){
     char* label;
-    update_request = FALSE;
+    bool update_request = FALSE;
     is_capslock_on = is_capslock_enabled();
     for(int i=0;i<_cur;i++){
         switch (masks[buttons[i].keycode]){

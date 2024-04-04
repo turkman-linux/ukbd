@@ -39,17 +39,9 @@ GtkWidget* init_window(){
     const gchar *cssData = " *, *>* { \
          padding: 0px; \
          margin: 0px; \
-         border-radius: 0px; \
-         background: none; \
       }\
       window {\
          background: #1b1b1b; \
-      }\
-      #key_enabled, \
-      #key_normal, \
-      #key_active, \
-      #key_lock { \
-         border: 3px solid #1b1b1b; \
       }\
       #key_enabled { \
          background: #8e0000; \
@@ -57,6 +49,7 @@ GtkWidget* init_window(){
       } \
       #key_normal { \
          background: rgba(255, 255, 255, 0.2); \
+         border: none; \
          color: #ffffff; \
       } \
       #key_active {\
