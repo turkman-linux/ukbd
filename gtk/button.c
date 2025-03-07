@@ -32,7 +32,7 @@ void button_clicked(GtkWidget *button, gpointer data) {
         update_buttons();
     }
     if(number == KEY_CAPSLOCK){
-        g_timeout_add(300, update_buttons, NULL);
+        g_timeout_add(300, (GSourceFunc)update_buttons, NULL);
     }
     update_required = false;
 }
@@ -46,14 +46,14 @@ void button_released_event(gpointer *data) {
     gtk_widget_set_name((GtkWidget*)data, "key_normal");
 }
 void button_released(GtkWidget *button, gpointer data) {
-        g_timeout_add(300, button_released_event, button);
+        g_timeout_add(300, (GSourceFunc)button_released_event, button);
 }
 
 GtkButton* create_button(int number, char* label){
-    GtkButton* ret = gtk_button_new_with_label(label);
+    GtkButton* ret = (GtkButton*) gtk_button_new_with_label(label);
     g_signal_connect(ret, "pressed", G_CALLBACK(button_pressed), (gpointer)number);
     g_signal_connect(ret, "released", G_CALLBACK(button_released), (gpointer)number);
-    gtk_widget_show(ret);
+    gtk_widget_show((GtkWidget*)ret);
     return ret;
 }
 
@@ -88,9 +88,9 @@ GtkButton* create_toggle_button(int number, char* label){
     if(masks == NULL){
         masks = (int*)calloc(255, sizeof(int));
     }
-    GtkButton* ret = gtk_button_new_with_label(label);
+    GtkButton* ret = (GtkButton*) gtk_button_new_with_label(label);
     g_signal_connect(ret, "clicked", G_CALLBACK(toggle_button_clicked), (gpointer)number);
-    gtk_widget_show(ret);
+    gtk_widget_show((GtkWidget*)ret);
     return ret;
 }
 

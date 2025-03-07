@@ -48,7 +48,7 @@ int main(int argc, gchar **argv) {
     settings = g_settings_new("org.turkman.ukbd");
 
     atspi_init();
-    AtspiEventListener *listener = atspi_event_listener_new(on_event, NULL, NULL);
+    AtspiEventListener *listener = atspi_event_listener_new((AtspiEventListenerCB)on_event, NULL, NULL);
     if (!listener) {
         fprintf(stderr, "Failed to create event listener\n");
         g_object_unref(settings);

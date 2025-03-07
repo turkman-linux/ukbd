@@ -6,8 +6,12 @@ GtkWidget *window;
 
 extern GSettings * settings;
 
+void build_layout_full();
+void build_layout_mini();
+void reallocate_buttons(int width, int height);
+
 // https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
-void main(int argc, char **argv) {
+int main(int argc, char **argv) {
     single_instance();
     // force use X11 backend
     setenv("GDK_BACKEND", "x11", 1);
@@ -16,7 +20,7 @@ void main(int argc, char **argv) {
     window = init_window();
 
     if (access( SERVER_SOCK_FILE, F_OK ) != 0 ) {
-       gtk_container_add(window, gtk_label_new("Failed to connect service!"));
+       gtk_container_add((GtkContainer*)window, gtk_label_new("Failed to connect service!"));
        gtk_widget_show_all(window);
        gtk_main();
        return 0;
@@ -53,6 +57,7 @@ void main(int argc, char **argv) {
 
 
     gtk_widget_show_all(window);
+    gtk_window_stick((GtkWindow*)window);
     update_buttons();
     // trigger resize event
     reallocate_buttons(333, 111);

@@ -8,6 +8,8 @@
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 
+void reallocate_buttons(int window_width, int window_height);
+
 GtkWidget *fixed;
 GtkWidget *scrolled_window;
 Button buttons[1024];
@@ -73,12 +75,12 @@ void reallocate_buttons(int window_width, int window_height){
         int new_y = (window_height * buttons[i].col) / num_of_col;
         // printf("%d %f %d %d \n", i, new_x_percent, new_x, new_y);
         gtk_widget_set_size_request(buttons[i].widget, button_width - padding, button_height - padding);
-        gtk_fixed_move(fixed, buttons[i].widget, new_x + padding , new_y + padding);
+        gtk_fixed_move((GtkFixed*)fixed, buttons[i].widget, new_x + padding , new_y + padding);
         if (old_size != new_size){
             if (buttons[i].image) {
-                gtk_image_set_pixel_size(buttons[i].image, new_size*2);
+                gtk_image_set_pixel_size((GtkImage*)buttons[i].image, new_size*2);
             }else{
-                gtk_widget_override_font(buttons[i].widget, fontdesc);
+                gtk_widget_override_font((GtkWidget*)buttons[i].widget, fontdesc);
 
             }
         }
@@ -92,7 +94,7 @@ void keyboardview_init(GtkWidget *window){
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     gtk_container_add(GTK_CONTAINER(window), scrolled_window);
     gtk_container_add(GTK_CONTAINER(scrolled_window), fixed);
-    gtk_scrolled_window_set_policy(scrolled_window, GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
+    gtk_scrolled_window_set_policy((GtkScrolledWindow*)scrolled_window, GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
     gtk_widget_set_name(scrolled_window, "scrolled");
     g_signal_connect(window, "size-allocate", G_CALLBACK(on_window_resized), NULL);
 }
@@ -142,7 +144,7 @@ void update_buttons(){
                 label = get_label_from_keycode(buttons[i].keycode + 8, 0);
             }
             if(strcmp(buttons[i].label, label)!=0){
-                gtk_button_set_label(buttons[i].widget, label);
+                gtk_button_set_label((GtkButton*)buttons[i].widget, label);
                 buttons[i].label = label;
                 update_request = TRUE;
             }
@@ -170,19 +172,19 @@ void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* 
     gtk_fixed_put(GTK_FIXED(fixed), b.widget, 0, 0);
 }
 void add_button_with_label(int keycode, int row, int col, float percent, char* label){
-    add_button_custom(keycode, row, col, percent, create_button(keycode, label));
+    add_button_custom(keycode, row, col, percent, (GtkWidget*)create_button(keycode, label));
     buttons[_cur-1].label = label;
 }
 
 
 void add_button_with_image(int keycode, int row, int col, float percent, char* name){
-    GtkButton* but = gtk_button_new();
+    GtkButton* but = (GtkButton*)gtk_button_new();
     g_signal_connect(but, "clicked", G_CALLBACK(button_clicked), (gpointer)keycode);
-    add_button_custom(keycode, row, col, percent, but);
+    add_button_custom(keycode, row, col, percent, (GtkWidget*)but);
 
     buttons[_cur-1].image = gtk_image_new_from_icon_name(name, GTK_ICON_SIZE_BUTTON);
 
-    gtk_container_add(buttons[_cur-1].widget, buttons[_cur-1].image);
+    gtk_container_add((GtkContainer*)buttons[_cur-1].widget, buttons[_cur-1].image);
     gtk_widget_show_all(buttons[_cur-1].widget);
 }
 

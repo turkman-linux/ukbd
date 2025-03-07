@@ -34,19 +34,19 @@ void build_layout_full(){
     add_button_with_image(KEY_PAGEDOWN, 15, 3, l(2), "ukbd-pgdn");
 
     // third row
-    add_button_custom(KEY_LEFTSHIFT, 0, 4, l(3.6), create_toggle_button(KEY_LEFTSHIFT, "shift"));
+    add_button_custom(KEY_LEFTSHIFT, 0, 4, l(3.6), (GtkWidget*)create_toggle_button(KEY_LEFTSHIFT, "shift"));
     add_buttons(4, 1, KEY_Z, KEY_SLASH, l(2));
-    add_button_custom(KEY_RIGHTSHIFT, 12, 4, l(2.3), create_toggle_button(KEY_RIGHTSHIFT, "shift"));
+    add_button_custom(KEY_RIGHTSHIFT, 12, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_RIGHTSHIFT, "shift"));
     add_button_with_image(KEY_UP, 13, 4, l(2.3), "ukbd-up-arrow");
     add_button_with_image(KEY_END, 14, 4, l(2.3), "ukbd-end");
 
     // bottom row
-    add_button_custom(KEY_LEFTCTRL, 0, 5, l(2.3), create_toggle_button(KEY_LEFTCTRL, "ctrl"));
+    add_button_custom(KEY_LEFTCTRL, 0, 5, l(2.3), (GtkWidget*)create_toggle_button(KEY_LEFTCTRL, "ctrl"));
     add_button_with_label(KEY_LEFTMETA, 1, 5, l(2.3), "Lnx");
-    add_button_custom(KEY_LEFTALT, 2, 5, l(2.3), create_toggle_button(KEY_LEFTALT, "alt"));
+    add_button_custom(KEY_LEFTALT, 2, 5, l(2.3), (GtkWidget*)create_toggle_button(KEY_LEFTALT, "alt"));
     add_button_with_label(KEY_SPACE, 3, 5, l(12.4), "____");
-    add_button_custom(KEY_RIGHTALT, 4, 5, l(2.3), create_toggle_button(KEY_RIGHTALT, "alt"));
-    add_button_custom(KEY_RIGHTCTRL, 5, 5, l(2), create_toggle_button(KEY_RIGHTCTRL, "ctrl"));
+    add_button_custom(KEY_RIGHTALT, 4, 5, l(2.3), (GtkWidget*)create_toggle_button(KEY_RIGHTALT, "alt"));
+    add_button_custom(KEY_RIGHTCTRL, 5, 5, l(2), (GtkWidget*)create_toggle_button(KEY_RIGHTCTRL, "ctrl"));
     add_button_with_image(KEY_LEFT, 6, 5, l(2.3), "ukbd-left-arrow");
     add_button_with_image(KEY_DOWN, 7, 5, l(2.3), "ukbd-down-arrow");
     add_button_with_image(KEY_RIGHT, 8, 5, l(2.3), "ukbd-right-arrow");
