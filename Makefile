@@ -63,6 +63,14 @@ test-x86:
 build: libukbd main gui-gtk
 
 install:
+	mkdir -p $(DESTDIR)/usr/bin
+	mkdir -p $(DESTDIR)/usr/libexec
+	mkdir -p $(DESTDIR)/usr/$(LIBDIR)
+	mkdir -p $(DESTDIR)/etc/xdg/autostart/
+	mkdir -p $(DESTDIR)/usr/share/applications/
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/
+	mkdir -p $(DESTDIR)/usr/share/icons/hicolor/scalable/actions/
+	mkdir -p $(DESTDIR)/usr/share/glib-2.0/schemas/
 	install -Dm755 build/main $(DESTDIR)/usr/libexec/ukbd
 	install -Dm755 build/libukbd.so $(DESTDIR)/usr/$(LIBDIR)
 	install -Dm755 build/gui-gtk $(DESTDIR)/usr/bin/ukbd-gtk
