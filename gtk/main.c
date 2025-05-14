@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     gtk_init(&argc, &argv);
     g_set_prgname("org.turkman.ukbd-gtk");
     window = init_window();
-    gtk_window_set_title(window, "UInput Screen Keyboard");
+    gtk_window_set_title((GtkWindow*)window, "UInput Screen Keyboard");
 
     if (access( SERVER_SOCK_FILE, F_OK ) != 0 ) {
        gtk_container_add((GtkContainer*)window, gtk_label_new("Failed to connect service!"));

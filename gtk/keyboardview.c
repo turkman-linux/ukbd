@@ -6,7 +6,9 @@
 #define mask_shift (masks[KEY_LEFTSHIFT] || masks[KEY_RIGHTSHIFT])
 #define mask_altgr masks[KEY_RIGHTALT]
 
+#ifndef MIN
 #define MIN(a,b) (((a)<(b))?(a):(b))
+#endif
 
 void reallocate_buttons(int window_width, int window_height);
 
@@ -55,7 +57,8 @@ static int find_num_of_col(){
 }
 
 static int padding = 5;
-static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpointer user_data) {
+static void on_window_resized(GtkWidget *widget, GdkRectangle *allocation, gpointer *user_data) {
+    (void)widget; (void)user_data;
     // Get the width of the window
     padding = MIN(allocation->width, allocation->height) / 44;
     int window_width = allocation->width - padding;
@@ -106,7 +109,7 @@ void add_button(int keycode, int row, int col, float percent){
 }
 
 
-void update_buttons(){
+gboolean update_buttons(){
     char* label;
     bool update_request = FALSE;
     is_capslock_on = is_capslock_enabled();
@@ -128,7 +131,6 @@ void update_buttons(){
             }else{
                 gtk_widget_set_name(buttons[i].widget, "key_normal");
             }
-    
         }
         if (buttons[i].update){
             label = NULL;
@@ -153,6 +155,7 @@ void update_buttons(){
     if(update_request){
         reload_window();
     }
+    return true;
 }
 
 void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* widget){
@@ -179,7 +182,7 @@ void add_button_with_label(int keycode, int row, int col, float percent, char* l
 
 void add_button_with_image(int keycode, int row, int col, float percent, char* name){
     GtkButton* but = (GtkButton*)gtk_button_new();
-    g_signal_connect(but, "clicked", G_CALLBACK(button_clicked), (gpointer)keycode);
+    g_signal_connect(but, "clicked", G_CALLBACK(button_clicked), GINT_TO_POINTER(keycode));
     add_button_custom(keycode, row, col, percent, (GtkWidget*)but);
 
     buttons[_cur-1].image = gtk_image_new_from_icon_name(name, GTK_ICON_SIZE_BUTTON);

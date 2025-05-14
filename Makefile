@@ -11,7 +11,8 @@ LD_FLAGS  = `pkg-config --libs gtk+-3.0 gio-2.0` -g3
 all: clean build
 
 %.o: %.c
-	$(CC) -c $< -o $@ -Ilibrary -Ibuild -fPIC $(CFLAGS) $(GTK_FLAGS) -Igtk
+	$(CC) -c $< -o $@ -Ilibrary -Ibuild -fPIC $(CFLAGS) $(GTK_FLAGS) -Igtk \
+	    -Wall -Wextra -Werror -Wno-deprecated-declarations
 
 main: $(service_files)
 	mkdir -p build

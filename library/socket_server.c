@@ -6,9 +6,7 @@ struct sockaddr_un server_from;
 struct sockaddr_un server_addr;
 socklen_t fromlen;
 void socket_init() {
-    int ret;
     int ok = 1;
-    int len;
     fromlen = sizeof(server_from);
 
     if ((soc_server_fd = socket(PF_UNIX, SOCK_DGRAM, 0)) < 0) {

@@ -3,7 +3,8 @@ extern GtkWidget *window;
 extern GtkWidget *scrolled_window;
 GSettings *settings;
 
-gboolean window_quit(GtkWidget* self, GdkEvent* event, gpointer user_data) {
+gboolean window_quit(GtkWidget* self, GdkEvent* event, gpointer *user_data) {
+    (void)self; (void)event; (void)user_data;
     int new_width, new_height, new_x, new_y;
     gtk_window_get_size ((GtkWindow*)window, &new_width, &new_height);
     gtk_window_get_position((GtkWindow*)window, &new_x, &new_y);
@@ -34,7 +35,7 @@ GtkWidget* init_window(){
     gtk_window_set_icon_name((GtkWindow*)window, "ukbd");
 
     g_signal_connect(window, "delete-event", G_CALLBACK(window_quit), NULL);
-    
+
     GtkCssProvider *cssProvider = gtk_css_provider_new();
     const gchar *cssData = " *, *>* { \
          padding: 0px; \
