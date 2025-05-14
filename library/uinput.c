@@ -18,7 +18,7 @@ void emit(int fd, int type, int code, int val) {
     ie.time.tv_sec = 0;
     ie.time.tv_usec = 0;
 
-    write(fd, & ie, sizeof(ie));
+    (void)write(fd, & ie, sizeof(ie));
 }
 
 int fd;
