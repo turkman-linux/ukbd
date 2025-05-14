@@ -17,14 +17,16 @@ int main(int argc, char **argv) {
     setenv("GDK_BACKEND", "x11", 1);
     // init gtk
     gtk_init(&argc, &argv);
+    g_set_prgname("org.turkman.ukbd-gtk");
     window = init_window();
+    gtk_window_set_title(window, "UInput Screen Keyboard");
 
     if (access( SERVER_SOCK_FILE, F_OK ) != 0 ) {
        gtk_container_add((GtkContainer*)window, gtk_label_new("Failed to connect service!"));
        gtk_widget_show_all(window);
        gtk_main();
        return 0;
-    } 
+    }
 
     keyboardview_init(window);
 
