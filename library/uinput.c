@@ -18,7 +18,10 @@ void emit(int fd, int type, int code, int val) {
     ie.time.tv_sec = 0;
     ie.time.tv_usec = 0;
 
-    (void)write(fd, & ie, sizeof(ie));
+    ssize_t r = write(fd, & ie, sizeof(ie));
+    if(r<0){
+        perror("failed to write uinput");
+    }
 }
 
 int fd;
