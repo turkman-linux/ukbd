@@ -19,6 +19,7 @@ void emit(int fd, int type, int code, int val) {
     ie.time.tv_usec = 0;
 
     ssize_t r = write(fd, & ie, sizeof(ie));
+    printf("type: %d code: %d value: %d\n", type, code, val);
     if(r<0){
         perror("failed to write uinput");
     }
@@ -47,6 +48,8 @@ void uinput_init(void) {
     fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
 
     ioctl(fd, UI_SET_EVBIT, EV_KEY);
+    ioctl(fd, UI_SET_KEYBIT, BTN_LEFT);
+    ioctl(fd, UI_SET_KEYBIT, BTN_RIGHT);
 
     for (int i = 1; i <= 245; i++) {
         ioctl(fd, UI_SET_KEYBIT, i);

@@ -2,12 +2,12 @@
 #define _keyboard_h
 #include <libukbd.h>
 void send_key(int code);
-char* socket_read();
+int* socket_read();
 void press_key(int code);
 void release_key(int code);
 void client_init();
 void socket_init();
-void client_send(char* buff);
+void client_send(int* buff);
 void uinput_init();
 void permission_init();
 

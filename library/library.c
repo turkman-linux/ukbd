@@ -6,7 +6,7 @@ void ukbd_event(int code, int status){
         client_init();
         library_init = 1;
     }
-    char buf[3];
+    int buf[3];
     buf[0] = status;
     buf[1] = code;
     buf[2] = 0;

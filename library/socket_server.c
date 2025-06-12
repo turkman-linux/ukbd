@@ -37,8 +37,8 @@ int socket_destroy() {
     return 0;
 }
 
-char * socket_read() {
-    char * buff = malloc(SOCKET_BUFFER_LENGTH * sizeof(char));
-    recvfrom(soc_server_fd, buff, SOCKET_BUFFER_LENGTH, 0, (struct sockaddr * ) & server_from, & fromlen);
+int * socket_read() {
+    int * buff = malloc(SOCKET_BUFFER_LENGTH * sizeof(int));
+    recvfrom(soc_server_fd, buff, SOCKET_BUFFER_LENGTH * sizeof(int), 0, (struct sockaddr * ) & server_from, & fromlen);
     return buff;
 }

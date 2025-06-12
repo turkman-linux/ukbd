@@ -15,7 +15,7 @@ int _start() {
     socket_init();
     uinput_init();
     while (1) {
-        char * data = socket_read();
+        int* data = socket_read();
         int status = data[0];
         int key = data[1];
         if (status == 1){

@@ -13,8 +13,8 @@ void client_init() {
     connect(soc_client_fd, (struct sockaddr *) &client_addr, sizeof(client_addr));
 
 }
-void client_send(char* buff){
-    if (send(soc_client_fd, buff, strlen(buff) + 1, 0) == -1) {
+void client_send(int* buff){
+    if (send(soc_client_fd, buff, sizeof(buff), 0) == -1) {
         perror("send");
     }
 }

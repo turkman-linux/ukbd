@@ -31,6 +31,8 @@ void add_button_custom(int keycode, int row, int col, float percent, GtkWidget* 
 void reload_window();
 gboolean update_buttons();
 
+
+GtkButton *mouse_selector();
 void single_instance();
 
 // X11 code + 8 = uinput code

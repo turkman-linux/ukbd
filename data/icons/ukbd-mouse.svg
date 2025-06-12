@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="ukbd-mouse.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.73892659"
+     inkscape:cx="600.8716"
+     inkscape:cy="366.74821"
+     inkscape:window-width="1920"
+     inkscape:window-height="1012"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="g7"
+     transform="matrix(1.6327568,0,0,1.6327568,-4.4995673,0.01591686)">
+    <rect
+       style="opacity:0.822936;fill:#808080;stroke-width:0.12243"
+       id="rect3"
+       width="7.272727"
+       height="8.5550184"
+       x="4.0191388"
+       y="0.61244011"
+       ry="1.7383254" />
+    <path
+       id="path6"
+       style="opacity:0.822936;fill:#333333;stroke-width:0.180809"
+       d="m 9.4005411,0.61242188 c 1.4844019,0 1.9995919,0.86997422 1.8913249,2.67945312 -0.08866,1.4817518 0.415412,2.6580566 -1.06897,2.665881 L 7.6554986,5.9712891 V 0.61242188 Z"
+       sodipodi:nodetypes="sssccs" />
+    <path
+       id="path7"
+       style="opacity:0.822936;fill:#4d4d4d;stroke-width:0.180809"
+       d="m 5.910456,0.61242198 c -1.4844019,0 -1.9995919,0.86997422 -1.8913249,2.67945312 0.08866,1.4817518 -0.415412,2.6580566 1.06897,2.665881 l 2.5673975,0.013533 V 0.61242198 Z"
+       sodipodi:nodetypes="sssccs" />
+    <rect
+       style="opacity:0.822936;fill:#b3b3b3;stroke-width:0.15964"
+       id="rect6"
+       width="0.68898439"
+       height="2.8489082"
+       x="7.3110156"
+       y="1.8674015"
+       ry="0.3444922" />
+  </g>
+</svg>
