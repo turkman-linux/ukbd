@@ -28,13 +28,14 @@ void build_layout_mini(){
     add_button_with_image(KEY_END, 14, 3, l(2.3), "ukbd-end");
 
     // bottom row
-    add_button_custom(KEY_LEFTCTRL, 0, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_LEFTCTRL, "Ctrl"));
+    add_button_custom(KEY_LEFTCTRL, 0, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_LEFTCTRL, "ctrl"));
     add_button_with_label(KEY_LEFTMETA, 1, 4, l(2.3), "Lnx");
-    add_button_custom(KEY_LEFTALT, 2, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_LEFTALT, "Alt"));
-    add_button_with_label(KEY_SPACE, 3, 4, l(12.4), "____");
-    add_button_custom(KEY_RIGHTALT, 4, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_RIGHTALT, "Alt"));
-    add_button_custom(KEY_RIGHTCTRL, 5, 4, l(2), (GtkWidget*)create_toggle_button(KEY_RIGHTCTRL, "Ctrl"));
-    add_button_with_image(KEY_LEFT, 6, 4, l(2.3), "ukbd-left-arrow");
-    add_button_with_image(KEY_DOWN, 7, 4, l(2.3), "ukbd-down-arrow");
-    add_button_with_image(KEY_RIGHT, 8, 4, l(2.3), "ukbd-right-arrow");
+    add_button_custom(KEY_LEFTALT, 2, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_LEFTALT, "alt"));
+    add_button_with_label(KEY_SPACE, 3, 4, l(10.1), "____");
+    add_button_custom(KEY_RIGHTALT, 4, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_RIGHTALT, "alt"));
+    add_button_custom(KEY_RIGHTALT, 5, 4, l(2), (GtkWidget*)mouse_selector());
+    add_button_custom(KEY_RIGHTCTRL, 6, 4, l(2.3), (GtkWidget*)create_toggle_button(KEY_RIGHTCTRL, "ctrl"));
+    add_button_with_image(KEY_LEFT, 7, 4, l(2.3), "ukbd-left-arrow");
+    add_button_with_image(KEY_DOWN, 8, 4, l(2.3), "ukbd-down-arrow");
+    add_button_with_image(KEY_RIGHT, 9, 4, l(2.3), "ukbd-right-arrow");
 }
