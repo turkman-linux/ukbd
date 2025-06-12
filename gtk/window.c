@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+
 extern GtkWidget *window;
 extern GtkWidget *scrolled_window;
 GSettings *settings;
@@ -23,6 +24,8 @@ GtkWidget* init_window(){
     gtk_widget_show_all(window);
     gtk_window_set_keep_above((GtkWindow*)window,TRUE);
     gtk_widget_set_size_request((GtkWidget*)window, 333,111);
+    gtk_window_set_skip_taskbar_hint((GtkWindow*)window, TRUE);
+    gtk_window_set_skip_pager_hint((GtkWindow*)window, TRUE);
     gtk_window_resize((GtkWindow*)window,
         g_settings_get_int(settings, "width"),
         g_settings_get_int(settings, "height")
